@@ -140,6 +140,11 @@
                             </div>
                             <div class="yz-dropdown">
                                 <button class="yz-dropbtn"><a href="{:url('Photo/add')}">上传照片</a></button>
+                            </div>
+                            <div class="yz-dropdown">
+                                {volist name="navList" id="nav" key="key"}
+                                <button class="yz-dropbtn">{$nav.title}</button>
+                                {/volist}  
                             </div>                          
                         </ul>
                         </div>

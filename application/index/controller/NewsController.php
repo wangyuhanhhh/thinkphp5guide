@@ -4,6 +4,7 @@ use think\Controller;   //用于向V层进行数据的传递
 use app\common\model\News;   //新闻模型
 use think\Request;  //引用Request
 use think\Db;
+use app\common\model\Nav;
 
 /**
  * 新闻模块，继承think\Controller类后，利用V层对数据进行打包上传
@@ -174,9 +175,12 @@ class NewsController extends Controller
      */
     public function upload() {
         $News = new News();
-        $news = News::select();
+        $news = News::order('Sort', 'desc')->select();
+        $Nav = new Nav();
+        $navList = Nav::select();
+        // 将数据传给视图
+        $this->assign('navList', $navList);
         $this->assign('news', $news);
         return $this->fetch();
-        
     }
 }
