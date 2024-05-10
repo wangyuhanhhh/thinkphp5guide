@@ -3,6 +3,11 @@ namespace app\index\controller; //指出该文件的位置
 use think\Controller;   //用于向V层进行数据的传递
 use app\common\model\Web;   //首页模型
 use think\Request;  //引用Request
+use app\common\model\News;
+use app\common\model\Notice;
+use app\common\model\Experiment;
+use app\common\model\Download;
+
 
 /**
  * 网页首页，继承think\Controller后，就可以利用V层对数据进行打包了
@@ -12,6 +17,19 @@ class WebController extends Controller
 
     public function index()
     {
+        //查询新闻快讯数据(部分)用于显示
+        $newsList = News::limit(4)->select();
+        $noticeList = Notice::limit(5)->select();
+        $experimentList = Experiment::limit(5)->select();
+        $downloadList = Download::limit(5)->select();
+
+        //将查询的内容传给V层
+        $this->assign('newsList', $newsList);
+        $this->assign('noticeList', $noticeList);
+        $this->assign('experimentList', $experimentList);
+        $this->assign('downloadList', $downloadList);
+
+        //创建Web对象
         $Web = new Web; 
         $webs = $Web->select();
 
