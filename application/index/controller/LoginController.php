@@ -22,7 +22,7 @@ class LoginController extends Controller {
             return $this->success('登录成功', url('News/upload'));
         } else {
             //用户名不存在，跳转到登录界面
-            return $this->error('用户名h或密码不正确', url('index'));
+            return $this->error('用户名或密码不正确', url('index'));
         }
     }
     /**
