@@ -101,6 +101,12 @@
         color: #000; /* 设置圆点颜色 */
         margin-right: 8px; /* 调整圆点与文本之间的间距 */
     }
+    .font {
+        width: 300px; /* 容器宽度 */
+        white-space: nowrap; /* 不换行 */
+        overflow: hidden; /* 超出部分隐藏 */
+        text-overflow: ellipsis; /* 超出部分显示省略号 */
+    }
     </style>
 
 </head>
@@ -188,50 +194,55 @@
                     <h2 class="inline-header breadcrumb-right">新闻快讯</h2>
                     <span class="inline-span"><a href="{:url('News/index')}">快速进入</a></span> 
                 </div>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <div id="carouselExampleIndicators2" class="carousel slide" data-ride="carousel">
+                                <ol class="carousel-indicators center">
+                                  <li data-target="#carouselExampleIndicators2" data-slide-to="0" class="active"></li>
+                                  <li data-target="#carouselExampleIndicators2" data-slide-to="1"></li>
+                                  <li data-target="#carouselExampleIndicators2" data-slide-to="2"></li>
+                                </ol>
+                                <div class="carousel-inner">
+                                  <div class="carousel-item active">
+                                    <img style="height: 100%;" src="/thinkphp5guide/public/static/picture/5.jpg" class="d-block w-100" alt="...">
+                                  </div>
+                                  <div class="carousel-item">
+                                    <img style="height: 100%;" src="/thinkphp5guide/public/static/picture/6.JPG" class="d-block w-100" alt="...">
+                                  </div>
+                                  <div class="carousel-item">
+                                    <img style="height: 100%;" src="/thinkphp5guide/public/static/picture/7.jpg" class="d-block w-100" alt="...">
+                                  </div>
+                                </div>
+                              </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div>
+                                <ul>
+                                    <?php foreach($newsList as $news): ?>
+                                        <li><a href="#"><p class="font"><?php echo $news['text']; ?></p></a></li>                       
+                                    <?php endforeach ?>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="col-md-4 mb-3">
                 <div class="breadcrumb">
                     <h2 class="inline-header breadcrumb-left">实验教学</h2>
                     <span class="inline-span"><a href="{:url('Experiment/index')}">快速进入</a></span> 
                 </div>
-            </div>
-        </div>
-    </div>
-    <!-- 快讯内容 -->
-    <div class="container">
-        <div class="row">
-            <div class="col-md-4 mb-3">
-                <div id="carouselExampleIndicators2" class="carousel slide" data-ride="carousel">
-                    <ol class="carousel-indicators center">
-                      <li data-target="#carouselExampleIndicators2" data-slide-to="0" class="active"></li>
-                      <li data-target="#carouselExampleIndicators2" data-slide-to="1"></li>
-                      <li data-target="#carouselExampleIndicators2" data-slide-to="2"></li>
-                    </ol>
-                    <div class="carousel-inner">
-                      <div class="carousel-item active">
-                        <img style="height: 100%;" src="/thinkphp5guide/public/static/picture/5.jpg" class="d-block w-100" alt="...">
-                      </div>
-                      <div class="carousel-item">
-                        <img style="height: 100%;" src="/thinkphp5guide/public/static/picture/6.JPG" class="d-block w-100" alt="...">
-                      </div>
-                      <div class="carousel-item">
-                        <img style="height: 100%;" src="/thinkphp5guide/public/static/picture/7.jpg" class="d-block w-100" alt="...">
-                      </div>
-                    </div>
-                  </div>
-            </div>
-            <div class="col-md-4 mb-3">
                 <div>
-                    <a href="#"><p class="font">天津职业技术师范大学科学技术协会第一次会员大会暨工作会议成功召开</p></a>
-                    <a href="#"><p class="font">天津职业技术师范大学赵文平教授应邀到我院开展专题讲座-教育学院</p></a>
-                    <a href="#"><p class="font">校领导率团赴天津职业技术师范大学调研</p></a>
-                    <a href="#"><p class="font">天津职业技术师范大学助力第45届世界技能大赛中国代表团再创辉煌</p></a>
-                    <a href="#"><p class="font">天津职业技术师范大学</p></a>
-                    <a href="#"><p class="font">天津职业技术师范大学</p></a>
+                    <?php foreach($experimentList as $experiment): ?>
+                        <li class="font"><a href="#"><?php echo $experiment['name']; ?></a></li>
+                    <?php endforeach ?>
                 </div>
             </div>
         </div>
     </div>
+    <!-- 快讯内容 -->
+    
     
     <!-- part.2 -->
     <div class="container">
@@ -242,15 +253,9 @@
                     <span class="inline-span"><a href="{:url('Notice/index')}">快速进入</a></span> 
                 </div>
                 <div>
-                    <li class="font"><a href="#">A座304实验室正在维修,暂停使用</a></li>
-                    <li class="font"><a href="#">B座406实验室发现有遗失的笔记本电脑</a></li>
-                    <li class="font"><a href="#">A座304实验室正在维修,暂停使用</a></li>
-                    <li class="font"><a href="#">关于组织教师深入学习宣传贯彻习</a></li>
-                    <li class="font"><a href="#">关于组织教师深入学习宣传贯彻习近</a></li>
-                    <li class="font"><a href="#">A座304实验室正在维修,暂停使用</a></li>
-                    <li class="font"><a href="#">A座304实验室正在维修,暂停使用</a></li>
-                    <li class="font"><a href="#">A座304实验室正在维修,暂停使用</a></li>
-                    <li class="font"><a href="#">A座304实验室正在维修,暂停使用</a></li>
+                    <?php foreach($noticeList as $notice): ?>
+                        <li class="font"><a href="#"><?php echo $notice['text']; ?></a></li>
+                    <?php endforeach ?>
                 </div>
             </div>
             <div class="col-sm mb-1">
@@ -259,14 +264,9 @@
                     <span class="inline-span"><a href="{:url('Download/index')}">快速进入</a></span> 
                 </div>
                 <div>
-                    <a href="#"><li class="font">实验1报告模版、教学视频、注意事项</li></a>
-                    <a href="#"><li class="font">实验2报告模版、教学视频、注意事项</li></a>
-                    <a href="#"><li class="font">实验3报告模版、教学视频、注意事项</li></a>
-                    <a href="#"><li class="font">实验4报告模版、教学视频、注意事项</li></a>
-                    <a href="#"><li class="font">实验5报告模版、教学视频、注意事项</li></a>
-                    <a href="#"><li class="font">实验6报告模版、教学视频、注意事项</li></a>
-                    <a href="#"><li class="font">实验7报告模版、教学视频、注意事项</li></a>
-                    <a href="#"><li class="font">实验8报告模版、教学视频、注意事项</li></a>
+                    <?php foreach($downloadList as $download): ?>
+                        <a href="#"><li class="font"><?php echo $download['name']; ?></li></a>
+                    <?php endforeach ?>
                 </div>
             </div>
             <div class="col-sm mb-1">
