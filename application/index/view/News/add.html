@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head lang="zh-cn">
+	<meta charset="utf-8">
+	<title>上传文件</title>
+</head>
+<body class="container">
+	<!-- 上传文件一个盒子 -->
+	<div class="row">
+        <div class="col-md-12">
+            <!-- 整合为一个表单 -->
+            <form action="{:url('News/insert')}" method="post" enctype="multipart/form-data">
+                <!-- 文件上传部分 -->
+                <div class="form-group">
+                    <input type="file" name="file" required>
+                </div>
+    
+                <!-- 文本输入框 -->
+                <div class="form-group">
+                    <label for="Description">请输入新闻标题：</label>
+                    <textarea type="text" id="Description" name="Description" rows="3" required></textarea>
+                </div>
+    
+                <!-- 日期选择器 -->
+                <div class="form-group">
+                    <label for="UploadDate">请选择新闻发布日期：</label>
+                    <input type="date" id="UploadDate" name="UploadDate" required>
+                </div>
+    
+                <!-- 提交按钮 -->
+                <button type="submit" class="btn btn-primary">提交</button>
+            </form>
+    
+            <!-- 显示上传文件的区域 -->
+            <div id="uploaded-file">
+            </div>
+        </div>
+    </div>
+    
+</body>
+</html>
