@@ -9,8 +9,10 @@ class ExperimentController extends Controller
 {
     public function index()
     {
+        //查询数据并启用分页
+        $pageSize = 5;
         $Experiment = new Experiment();
-        $experiments = $Experiment->select();
+        $experiments = $Experiment->paginate($pageSize);
 
         //向V层传数据
         $this->assign('experiments', $experiments);

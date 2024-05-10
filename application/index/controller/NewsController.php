@@ -59,17 +59,13 @@ class NewsController extends Controller
 
     public function index()
     {
-        //获取当前页码，默认为第一页
-        $currentPage = input('page', 1);
-
         //查询新闻数据并分页
         $News = new News;
         $pageSize = 5;
-        $newses = $News->paginate($pageSize, false, ['query' => request()->param()]);
+        $newses = $News->paginate($pageSize);
 
         // 向V层传数据
         $this->assign('newses', $newses);
-        $this->assign('currentPage', $newses);
 
         // 取回打包后的数据
         $htmls = $this->fetch();

@@ -175,31 +175,15 @@
           <h1 class="display-4">专业实验</h1>
           <p class="lead">This is a modified jumbotron that occupies the entire horizontal space of its parent.</p>
           <ul class="list-unstyled">
-            <li><a href="#" class="bullet-text">天津市教学名师、天津市级教学团队带头人阎文兵</a></li>
-            <li><a href="#" class="bullet-text">国家级技能大师、天津市首届“海河工匠”、我校2002届校友李基伍-教育学院</a></li>
-            <li><a href="#" class="bullet-text">校领导率团赴天津职业技术师范大学调研</a></li>
-            <li><a href="#" class="bullet-text">天津职业技术师范大学助力第45届世界技能大赛中国代表团再创辉煌</a></li>
-            <li><a href="#" class="bullet-text">国家国际发展合作署副署长赵峰涛一行到天职师大调研</a></li>
+            {volist name="experiments" id="experiment"}
+            <li><a href="#" class="bullet-text">{$experiment->getData('name')}</a></li>
+            {/volist}
           </ul>          
         </div>
-
-        <div class="mt-5">
-            <nav aria-label="...">
-                <ul class="pagination pagination-sm justify-content-center">
-                  <li class="page-item disabled">
-                    <span class="page-link">上一页</span>
-                  </li>
-                  <li class="page-item"><a class="page-link" href="#">1</a></li>
-                  <li class="page-item active" aria-current="page">
-                    <span class="page-link">2</span>
-                  </li>
-                  <li class="page-item"><a class="page-link" href="#">3</a></li>
-                  <li class="page-item">
-                    <a class="page-link" href="#">下一页</a>
-                  </li>
-                </ul>
-              </nav>
-        </div>  
+        <!-- 显示分页导航 -->
+        <div class="pagination">
+          {$experiments->render()}
+        </div>   
       </div>
 </body>
 </html>
