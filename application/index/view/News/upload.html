@@ -192,6 +192,12 @@
                         &nbsp;&nbsp;
                         <a href="{:url('delete', ['id' => $newsItem.NewsId])}">删除</a>
                     </th>
+                    <th>
+                        <form action="{:url('setTop')}" method="post" style="display:inline;">
+                            <input type="hidden" name="newsId" value="{$newsItem.NewsId}">
+                            <button type="submit" class="btn btn-sm btn-secondary">置顶新闻</button>
+                        </form>
+                    </th>
                 </tr>
                 {/volist}
             </table>
