@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <title>资料下载</title>
+
+    <script src="/thinkphp5guide/public/static/bootstrap-4.6.2-dist/jquery-3.5.1.slim.min.js"  crossorigin="anonymous"></script>
+    <script src="/thinkphp5guide/public/static/bootstrap-4.6.2-dist/bootstrap-4.6.2.bundle.min.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="/thinkphp5guide/public/static/bootstrap-4.6.2-dist/css/bootstrap.min.css">
+    <style type="text/css">
+    /* 下拉按钮样式 */
+    .yz-dropbtn {
+        background-color: #b763ab;
+        color: white;
+        padding: 16px;
+        font-size: 16px;
+        border: none;
+        cursor: pointer;
+    }
+    .yz-dropdown {
+        position:relative;
+        display:inline-block;
+    }
+    .yz-dropdown-content {
+        display:none;
+        position: absolute;
+        background-color: #f9f9f9;
+        min-width: 100px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    }
+    /*下拉菜单中的内容*/
+    .yz-dropdown-content a {
+        color: black;
+        padding:12px 16px;
+        text-decoration: none;
+        display: block;
+    }
+    .yz-dropdown-content a:hover {
+        background-color: #f1f1f1
+    }
+    .yz-dropdown:hover .dropdown-content {
+        display: block;
+    }
+    .yz-dropdown:hover .dropbtn {
+        background-color: #953998;
+    }
+    /*垂直导航栏样式*/
+    .yz-vertical-nav {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        width: 15%;
+        background-color: #f1f1f1;
+        position: fixed;
+        height: 50%;
+        overflow: auto;
+    }
+    .yz-vertical-nav li a {
+        display: block;
+        color: #000;
+        padding: 8px 16px;
+        text-decoration: none;
+    }
+    .yz-vertical-nav li a.active {
+        background-color: #ad4caf;
+        color: white;
+    }
+    .yz-vertical-nav li a:hover:not(.active) {
+        background-color: #d474d1;
+        color: white;
+    }
+    /*设置单元格内间距*/
+    table th, table td {
+        padding:10px;
+    }
+    /*新闻快讯和当前位置在一行上显示*/
+    .inline-header, .inline-span {
+        display: inline-block;
+        vertical-align: middle; /* 如果需要垂直居中对齐 */
+    }
+
+    .inline-header {
+        margin-right: 10px; /* 如果需要一些间距 */
+    }
+    .breadcrumb {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .breadcrumb-left {
+        text-align: left;
+    }
+
+    .breadcrumb-right {
+        text-align: right;
+    }
+
+    .bullet-text::before {
+        content: '\2022'; /* 使用Unicode编码生成圆点符号 */
+        color: #000; /* 设置圆点颜色 */
+        margin-right: 8px; /* 调整圆点与文本之间的间距 */
+    }
+    </style>
+
+</head>
+<body class="container">
+  <!-- 校徽 -->
+  <div style="width: 1200px;height: 175px;">
+    <img style="height: 170px;width: 1200px;"
+        src="/thinkphp5guide/public/static/picture/10.png" />
+</div>
+<!-- 菜单 -->
+<div class="row">
+    <div class="col-md-12">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="{:url('Web/index')}">
+                <img src="/thinkphp5guide/public/static/picture/top.jpg" width="55" height="55" alt="首页">
+            </a>
+           
+          
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="navbar-nav mr-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="{:url('News/index')}" role="button" data-toggle="dropdown" aria-expanded="false">
+                      新闻动态
+                    </a>
+                    <div class="dropdown-menu">
+                      <a class="dropdown-item" href="{:url('News/index')}">新闻快讯</a>
+                      <a class="dropdown-item" href="{:url('Notice/index')}">通知公告</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="{:url('Experiment/index')}" role="button" data-toggle="dropdown" aria-expanded="false">
+                      实验教学
+                    </a>
+                    <div class="dropdown-menu">
+                      <a class="dropdown-item" href="{:url('Experiment/index')}">专业实验</a>
+                      <a class="dropdown-item" href="#">创新创业实验</a>
+                      <a class="dropdown-item" href="#">跨专业综合实验</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{:url('Download/index')}">资料下载</a>
+                </li>
+                  <li class="nav-item">
+                    <a class="nav-link disabled">天津职业技术师范大学</a>
+                </li>
+              </ul>
+            </div>
+          </nav>
+</div>
+
+    <!-- 图片 -->
+    <div class="" style="width: 1200px;height: 175px;">
+        <img style="height: 170px;width: 1200px;"
+        src="/thinkphp5guide/public/static/picture/9.png">
+    </div>
+
+    <!-- 增加垂直导航栏 -->
+    <ul class="yz-vertical-nav">
+        <li><a class="active" href="#home">新闻动态</a></li>
+        <li><a href="{:url('News/index')}">新闻快讯</a></li>
+        <li><a href="{:url('Notice/index')}">公告通知</a></li>
+    </ul>
+
+    <div style="margin-left:25%;padding:1px 16px;">   
+        <div class="breadcrumb">
+            <h2 class="inline-header breadcrumb-right">资料下载</h2>
+        <span class="inline-span"><a href="{:url('Web/index')}">网站首页</a></span>
+        </div>
+
+        <div class="jumbotron jumbotron-fluid">
+            <div class="container">
+              <h1 class="display-4">资料目录</h1>
+              <p class="lead">This is a modified jumbotron that occupies the entire horizontal space of its parent.</p>
+              <ul class="list-unstyled">
+                <li><a href="#" class="bullet-text">实验器材用法解读</a></li>
+                <li><a href="#" class="bullet-text">实验室预约使用申请表(新空).docx</a></li>
+                <li><a href="#" class="bullet-text">信息学院23级C语言实验1实验报告(空表)</a></li>
+                <li><a href="#" class="bullet-text">信息学院23级JAVA程序设计实验3实验报告(空表)</a></li>
+                <li><a href="#" class="bullet-text">信息学院22级JAVA程序设计实验3实验报告(空表)</a></li>
+              </ul>          
+            </div>
+    
+            <div class="mt-5">
+                <nav aria-label="...">
+                    <ul class="pagination pagination-sm justify-content-center">
+                      <li class="page-item disabled">
+                        <span class="page-link">上一页</span>
+                      </li>
+                      <li class="page-item"><a class="page-link" href="#">1</a></li>
+                      <li class="page-item active" aria-current="page">
+                        <span class="page-link">2</span>
+                      </li>
+                      <li class="page-item"><a class="page-link" href="#">3</a></li>
+                      <li class="page-item">
+                        <a class="page-link" href="#">下一页</a>
+                      </li>
+                    </ul>
+                  </nav>
+            </div>  
+          </div>
+    </body>
+    </html>
