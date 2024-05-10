@@ -126,6 +126,28 @@ class NewsController extends Controller
     }
 
     /**
+     * 置顶文件
+     * newsId form表单传过来的id值
+     * id 置顶操作
+     */
+    public function setTop() {  
+        //接受数据
+        $postData = Request::instance()->post();
+        $id = $postData['newsId'];
+        if (is_null($id)) {
+            return $this->error('请选择要置顶的新闻', url('upload'));
+        }
+        $News  = new News();
+        //调用M层中的top方法
+        $result = $News->top($id);
+        if ($result) {
+            return $this->success('置顶成功', url('upload'));
+        } else {
+            return $this->error('置顶失败请重试');
+        }
+    }
+
+    /**
      * 接受处理edit传过来的数据
      */
     public function update() {
