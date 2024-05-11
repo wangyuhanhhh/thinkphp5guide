@@ -4,155 +4,69 @@
     <meta charset="utf-8">
     <title>新闻快讯</title>
 
-        <script src="/thinkphp5guide/public/static/jquery-3.5.1.slim.min.js"  crossorigin="anonymous"></script>
-        <script src="/thinkphp5guide/public/static/bootstrap-4.6.2.bundle.min.js" crossorigin="anonymous"></script>
-        <link rel="stylesheet" type="text/css" href="/thinkphp5guide/public/static/bootstrap-4.6.2-dist/css/bootstrap.min.css">
-    <style type="text/css">
-    /* 下拉按钮样式 */
-    .yz-dropbtn {
-        background-color: #b763ab;
-        color: white;
-        padding: 16px;
-        font-size: 16px;
-        border: none;
-        cursor: pointer;
-    }
-    .yz-dropdown {
-        position:relative;
-        display:inline-block;
-    }
-    .yz-dropdown-content {
-        display:none;
-        position: absolute;
-        background-color: #f9f9f9;
-        min-width: 100px;
-        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    }
-    /*下拉菜单中的内容*/
-    .yz-dropdown-content a {
-        color: black;
-        padding:12px 16px;
-        text-decoration: none;
-        display: block;
-    }
-    .yz-dropdown-content a:hover {
-        background-color: #f1f1f1
-    }
-    .yz-dropdown:hover .dropdown-content {
-        display: block;
-    }
-    .yz-dropdown:hover .dropbtn {
-        background-color: #953998;
-    }
-    /*垂直导航栏样式*/
-    .yz-vertical-nav {
-        list-style-type: none;
-        margin: 0;
-        padding: 0;
-        width: 15%;
-        background-color: #f1f1f1;
-        position: fixed;
-        height: 50%;
-        overflow: auto;
-    }
-    .yz-vertical-nav li a {
-        display: block;
-        color: #000;
-        padding: 8px 16px;
-        text-decoration: none;
-    }
-    .yz-vertical-nav li a.active {
-        background-color: #ad4caf;
-        color: white;
-    }
-    .yz-vertical-nav li a:hover:not(.active) {
-        background-color: #d474d1;
-        color: white;
-    }
-    /*设置单元格内间距*/
-    table th, table td {
-        padding:10px;
-    }
+    <script src="/thinkphp5guide/public/static/bootstrap-4.6.2-dist/jquery-3.5.1.slim.min.js"  crossorigin="anonymous"></script>
+    <script src="/thinkphp5guide/public/static/bootstrap-4.6.2-dist/bootstrap-4.6.2.bundle.min.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="/thinkphp5guide/public/static/bootstrap-4.6.2-dist/css/bootstrap.min.css">
+    <style>
+        /*新闻快讯和当前位置在一行上显示*/
     /*新闻快讯和当前位置在一行上显示*/
     .inline-header, .inline-span {
         display: inline-block;
         vertical-align: middle; /* 如果需要垂直居中对齐 */
     }
 
-    .inline-header {
-        margin-right: 10px; /* 如果需要一些间距 */
-    }
     .breadcrumb {
         display: flex;
         justify-content: space-between;
         align-items: center;
     }
 
-    .breadcrumb-left {
-        text-align: left;
-    }
-
     .breadcrumb-right {
         text-align: right;
     }
 
-    .bullet-text::before {
-        content: '\2022'; /* 使用Unicode编码生成圆点符号 */
-        color: #000; /* 设置圆点颜色 */
-        margin-right: 8px; /* 调整圆点与文本之间的间距 */
-    }
-
     </style>
-
 </head>
 <body class="container">
   <!-- 菜单导航 -->
-    <div class="row">
-        <div class="col-md-12">
-            <nav class="navbar navbar-default" role="navigation">
-                <div class="container-fluid">
-                    <div class="navbar-header">
-                        <a class="navbar-brand" href="http://www.mengyunzhi.com">天津职业技术师范大学</a>
-                    </div>
-                    <!--Collect the nav links, forms, and other content for toggling-->
-                    <div class="yz-collapse yz-navbar-collapse">
-                        <ul class="yz-nav yz-navbar-nav">
-                            <div class="yz-dropdown">                        
-                                <button class="yz-dropbtn"><a href="{:url('Ad/index')}">首页</a></button>
-                            </div>
-                            <div class="yz-dropdown">
-                                <button class="yz-dropbtn">新闻动态</button>
-                                <div class="yz-dropdown-content" style="z-index: 3">
-                                    <a href="{:url('News/news')}">新闻快讯</a>
-                                    <a href="{:url('News/notice')}">通知公告</a>
-                                </div>                
-                            </div>
-                            <div class="yz-dropdown">
-                                <button class="yz-dropbtn">实验教学</button>
-                                    <div class="yz-dropdown-content" style="z-index: 3">
-                                      <a href="#">专业实验</a>
-                                      <a href="#">创新创业实验</a>
-                                      <a href="#">跨专业综合实验</a>
-                                    </div>                
-                                </div>
-                            <div class="yz-dropdown">
-                                <button class="yz-dropbtn">资料下载</button>
-                            </div>
-                            <div class="yz-dropdown">
-                                <button class="yz-dropbtn"><a href="{:url('Photo/add')}">上传照片</a></button>
-                            </div>
-                            <div class="yz-dropdown">
-                                {volist name="navList" id="nav" key="key"}
-                                <button class="yz-dropbtn">{$nav.title}</button>
-                                {/volist}  
-                            </div>                          
-                        </ul>
+    <div>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="#">管理端</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
+                        新闻快讯</a>                       
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="#">新闻管理</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#">通知管理</a>
                         </div>
-                    <!--/.navbar-collapse-->
-                </div>
-                <!--/.container-fluid-->
-            </nav>
-        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">图片管理</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">导航栏编辑</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">个人中心</a>
+                    </li>
+                </ul>
+                <form class="form-inline my-2 my-lg-0">
+                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                </form>
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a href="{:url('Login/logOut')}" class="btn btn-outline-danger">注销</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
     </div>
     <!--导航结束-->
 
@@ -163,50 +77,58 @@
     </div>
 
     <!-- 增加垂直导航栏 -->
-    <ul class="yz-vertical-nav">
-        <li><a class="active" href="#home">新闻动态</a></li>
-        <li><a href="{:url('News/index')}">新闻快讯</a></li>
-        <li><a href="{:url('Notice/index')}">公告通知</a></li>
-    </ul>
-
-    <div style="margin-left:25%;padding:1px 16px;">   
-    <div class="breadcrumb">
-        <h2 class="inline-header breadcrumb-right">新闻快讯</h2>
-    <span class="inline-span"><a href="{:url('Web/index')}">网站首页</a></span>
-    </div>
-    <div class="col-md-4 text-left">
-        <a href="{:url('add')}" class="btn btn-primary"><i class="glyphicon glyphicon-plus"></i>&nbsp;增加</a>
-    </div>
     <div class="container">
         <div class="row">
-            <table class="table table-hover table-bordered"> 
-                <tr>
-                    <th>序号</th>
-                    <th>文件名</th>
-                    <th>新闻时间</th>
-                    <th>操作</th>
-                    <th>置顶</th>
-                </tr>          
-                {volist name="news" id="newsItem" key="key"}
-                <tr>
-                    <th>{$key}</th>
-                    <th>{$newsItem.Description}</th>
-                    <th>{$newsItem.UploadDate}</th>
-                    <th>
-                        <a href="{:url('edit', ['id' => $newsItem.NewsId])}">编辑</a>
-                        &nbsp;&nbsp;
-                        <a href="{:url('delete', ['id' => $newsItem.NewsId])}">删除</a>
-                    </th>
-                    <th>
-                        <form action="{:url('setTop')}" method="post" style="display:inline;">
-                            <input type="hidden" name="newsId" value="{$newsItem.NewsId}">
-                            <button type="submit" class="btn btn-sm btn-secondary">置顶新闻</button>
-                        </form>
-                    </th>
-                </tr>
-                {/volist}
-            </table>
-        </div>  
-    </div>  
+            <div class="col-md-2">
+                <ul class="nav flex-column col-">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><h4>新闻管理</h4></a>
+                    </li>
+                    <li class="nav-item">
+                         <a class="nav-link" href="#"><h4>通知管理</h4></a>
+                    </li>
+                  </ul>
+            </div>
+            <div class="col-md-10">   
+                <div class="breadcrumb">
+                    <h2 class="inline-header breadcrumb-right">新闻快讯</h2>
+                <span class="inline-span"><a href="{:url('Web/index')}">网站首页</a></span>
+                </div>
+                <div class="col-md-4 text-left">
+                    <a href="{:url('add')}" class="btn btn-primary"><i class="glyphicon glyphicon-plus"></i>&nbsp;增加</a>
+                </div>
+                <div class="container">
+                    <div class="row">
+                        <table class="table table-hover table-bordered"> 
+                            <tr>
+                                <th>序号</th>
+                                <th>文件名</th>
+                                <th>新闻时间</th>
+                                <th>操作</th>
+                                <th>置顶</th>
+                            </tr>          
+                            {volist name="news" id="newsItem" key="key"}
+                            <tr>
+                                <th>{$key}</th>
+                                <th>{$newsItem.Description}</th>
+                                <th>{$newsItem.UploadDate}</th>
+                                <th>
+                                    <a href="{:url('edit', ['id' => $newsItem.NewsId])}">编辑</a>
+                                    &nbsp;&nbsp;
+                                    <a href="{:url('delete', ['id' => $newsItem.NewsId])}">删除</a>
+                                </th>
+                                <th>
+                                    <form action="{:url('setTop')}" method="post" style="display:inline;">
+                                        <input type="hidden" name="newsId" value="{$newsItem.NewsId}">
+                                        <button type="submit" class="btn btn-sm btn-secondary">置顶新闻</button>
+                                    </form>
+                                </th>
+                            </tr>
+                            {/volist}
+                        </table>
+                    </div>  
+            </div>  
+        </div> 
+    </div>
 </body>
 </html>

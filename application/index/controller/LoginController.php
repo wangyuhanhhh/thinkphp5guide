@@ -30,7 +30,7 @@ class LoginController extends Controller {
      */
     public function logOut() {
         if (User::logOut()) {
-            return $this->success('成功推出登录', url('index'));
+            return $this->success('成功退出登录', url('Web/index'));
         } else {
             return $this->error('注销失败', url('index'));
         }
