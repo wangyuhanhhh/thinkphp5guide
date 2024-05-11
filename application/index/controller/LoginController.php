@@ -7,8 +7,8 @@ class LoginController extends Controller {
     /**
      * 用户登录表单
      */
-    public function index() {
-        return $this->fetch();
+    public function loginForm() {
+        return $this->fetch('User/loginForm');
     }
     /**
      * 处理用户提交的登录数据
