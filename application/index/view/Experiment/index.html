@@ -157,33 +157,48 @@
         src="/thinkphp5guide/public/static/picture/9.png">
     </div>
 
-    <!-- 增加垂直导航栏 -->
-    <ul class="yz-vertical-nav">
-        <li><a class="active" href="#home">实验教学</a></li>
-        <li><a href="{:url('Experiment/index')}">专业实验</a></li>
-        <li><a href="#">创新创业实验</a></li>
-        <li><a href="#">跨专业综合实验</a></li>
-    </ul>
+    <div class="container">
+        <div class="row">
+            <!-- 增加垂直导航栏 -->
+            <div class="col-md-2">
+                <ul class="nav flex-column col-">
+                    <li class="nav-item">
+                        <a class="nav-link disabled"><h4>实验教学</h4></a>
+                    </li>
+                    <li class="nav-item">
+                         <a class="nav-link" href="{:url('Experiment/index')}"><h4>专业实验</h4></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><h4>创新创业实验</h4></a>
+                    </li>
+                    <li class="nav-item">
+                    <a class="nav-link" href="#"><h4>跨专业综合实验</h4></a>
+                    </li>
+                  </ul>
+            </div>
 
-    <div style="margin-left:25%;padding:1px 16px;">   
-    <div class="breadcrumb">
-        <h2 class="inline-header breadcrumb-right">实验教学</h2>
-    <span class="inline-span"><a href="{:url('Web/index')}">网站首页</a></span>
-    </div>
-    <div class="jumbotron jumbotron-fluid">
-        <div class="container">
-          <h1 class="display-4">专业实验</h1>
-          <p class="lead">This is a modified jumbotron that occupies the entire horizontal space of its parent.</p>
-          <ul class="list-unstyled">
-            {volist name="experiments" id="experiment"}
-            <li><a href="#" class="bullet-text">{$experiment->getData('name')}</a></li>
-            {/volist}
-          </ul>          
+            <div class="col-md-10">
+                <div class="breadcrumb">
+                    <h2 class="inline-header breadcrumb-right">实验教学</h2>
+                <span class="inline-span"><a href="{:url('Web/index')}">网站首页</a></span>
+                </div>
+                <div class="jumbotron jumbotron-fluid">
+                    <div class="container">
+                      <h1 class="display-4">专业实验</h1>
+                      <p class="lead">This is a modified jumbotron that occupies the entire horizontal space of its parent.</p>
+                        <ul class="list-unstyled">
+                            {volist name="experiments" id="experiment"}
+                            <li><a href="#" class="bullet-text">{$experiment->getData('name')}</a></li>
+                            {/volist}
+                        </ul>          
+                    </div>
+                    <!-- 显示分页导航 -->
+                    <div class="pagination">
+                      {$experiments->render()}
+                    </div>   
+                </div>
+            </div>
         </div>
-        <!-- 显示分页导航 -->
-        <div class="pagination">
-          {$experiments->render()}
-        </div>   
-      </div>
+    </div>
 </body>
 </html>
