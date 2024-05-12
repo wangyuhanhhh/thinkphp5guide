@@ -2,6 +2,7 @@
 namespace app\common\model;
 use think\Model;
 class User extends Model {
+   
      /**
      * 验证密码是否正确
      * @param string $password 密码

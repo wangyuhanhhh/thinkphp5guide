@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="zh-hans">
+<head>
+    <meta charset="utf-8">
+    <title>编辑数据</title>
+</head>
+<body class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <form action="{:url('User/update')}" method="post">
+                <label>姓名:</label>
+                <input type="text" name="name" value="{$User->getData('name')}" />
+                <label>用户名:</label>
+                <input type="text" name="username" value="{$User->getData('username')}" />
+                <label>邮箱:</label>
+                <input type="email" name="email" value="{$User->getData('email')}" />
+                <button type="submit">保存</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
