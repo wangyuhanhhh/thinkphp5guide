@@ -10,18 +10,25 @@ class PhotoController extends Controller{
         return $this->fetch();
     }
     
+    public function index() {
+        $Photo = new Photo();
+        $photo = $Photo->select();
+        var_dump($photo);
+        die();
+        return $this->fetch();
+    }
     /**
      * 上传插入一张照片
      **/
     public function insert() {      
         $file = request()->file('file');     
         if ($file) {
-            $info = $file->move(ROOT_PATH . 'public' . DS . 'uploads');
+            $info = $file->move(ROOT_PATH . 'public' . DS . 'uploads' . 'photo');
             if ($info) {
                 $uploadDate = request()->post('UploadDate');
-                $photoExtension = $info->getExtension();
+                $extension = $info->getExtension();
                 $photo = new photo();
-                $data['PhotoExtension'] = $photoExtension;
+                $data['extension'] = $extension;
                 $data['UploadDate'] = $uploadDate;
                 $photo->save($data);
             }
@@ -34,13 +41,13 @@ class PhotoController extends Controller{
         $files = request()->file('file');     
         foreach($files as $file) {
             //移动到public\uploads\
-            $info = $file->move(ROOT_PATH . 'public' . DS . 'uploads');
+            $info = $file->move(ROOT_PATH . 'public' . DS . 'uploads' . 'photo');
             if ($info) {
                 $uploadDate = request()->post('UploadDate');
-                $photoExtension = $info->getExtension();
+                $extension = $info->getExtension();
                 //$fileName = $info->getSaveName();
                 $photo = new photo();
-                $data['PhotoExtension'] = $photoExtension;
+                $data['extension'] = $extension;
                 $data['UploadDate'] = $uploadDate;
                 $photo->save($data);
             }

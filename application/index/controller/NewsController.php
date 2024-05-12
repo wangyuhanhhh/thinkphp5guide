@@ -80,7 +80,7 @@ class NewsController extends Controller
        
         if ($file) 
         {
-            $info = $file->move(ROOT_PATH . 'public' . DS . 'uploads');
+            $info = $file->move(ROOT_PATH . 'public' . DS . 'uploads' . 'news');
             if ($info) 
             {
                 //获取文件描述信息即文件标题
