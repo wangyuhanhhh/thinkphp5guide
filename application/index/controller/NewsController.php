@@ -4,6 +4,7 @@ use think\Controller;   //用于向V层进行数据的传递
 use app\common\model\News;   //新闻模型
 use think\Request;  //引用Request
 use think\Db;
+use app\common\model\Nav;
 
 /**
  * 新闻模块，继承think\Controller类后，利用V层对数据进行打包上传
@@ -37,6 +38,25 @@ class NewsController extends Controller
         //跳转
         return $this->success('删除成功', url('upload'));
     }
+
+    /**
+     * 读取数据
+     */
+    public function edit() {
+        //获取传入id
+        $id = Request::instance()->param('id/d');
+        
+        //在表模型中获取当前记录
+        if (is_null( $News = News::get($id))) {
+            return '未找到ID为' . $id . '的记录';
+        }
+
+        //将数据传给V层
+        $this->assign('News', $News);
+        //获取封装好的V层内容并返回给客户
+        return $this->fetch();
+    }
+
     public function index()
     {
         //查询新闻数据并分页
@@ -101,11 +121,62 @@ class NewsController extends Controller
         }
         //return $this->fetch();
     }
+
+    /**
+     * 置顶文件
+     * newsId form表单传过来的id值
+     * id 置顶操作
+     */
+    public function setTop() {  
+        //接受数据
+        $postData = Request::instance()->post();
+        $id = $postData['newsId'];
+        if (is_null($id)) {
+            return $this->error('请选择要置顶的新闻', url('upload'));
+        }
+        $News  = new News();
+        //调用M层中的top方法
+        $result = $News->top($id);
+        if ($result) {
+            return $this->success('置顶成功', url('upload'));
+        } else {
+            return $this->error('置顶失败请重试');
+        }
+    }
+
+    /**
+     * 接受处理edit传过来的数据
+     */
+    public function update() {
+        //接收数据
+        $id = Request()->instance()->post('id/d');
+        
+        //获取当前对象
+        $News = News::get($id);
+        if (!is_null($News)) {
+            $News->Description = Request::instance()->post('Description');
+            $News->UploadDate = Request::instance()->post('UploadDate');
+            //更新数据
+            if (false === $News->save()) {
+                return '更新失败' . $News->getError();
+            } 
+        } else {
+            throw new \Exception("所更新的记录不存在", 1);
+        }
+        return $this->success('编辑成功', url('upload'));
+    }
+
+    /**
+     * 管理端上传文件列表
+     */
     public function upload() {
         $News = new News();
-        $news = News::select();
+        $news = News::order('Sort', 'desc')->select();
+        $Nav = new Nav();
+        $navList = Nav::select();
+        // 将数据传给视图
+        $this->assign('navList', $navList);
         $this->assign('news', $news);
         return $this->fetch();
-        
     }
 }

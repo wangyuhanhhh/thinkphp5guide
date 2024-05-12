@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <title>{block name="title"}标题{/block}</title>
+    <script src="/thinkphp5guide/public/static/bootstrap-4.6.2-dist/jquery-3.5.1.slim.min.js"  crossorigin="anonymous"></script>
+    <script src="/thinkphp5guide/public/static/bootstrap-4.6.2-dist/bootstrap-4.6.2.bundle.min.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="/thinkphp5guide/public/static/bootstrap-4.6.2-dist/css/bootstrap.min.css">
+    <style>
+        /*新闻快讯和当前位置在一行上显示*/
+        /*新闻快讯和当前位置在一行上显示*/
+        .inline-header, .inline-span {
+            display: inline-block;
+            vertical-align: middle; /* 如果需要垂直居中对齐 */
+        }
+
+        .breadcrumb {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .breadcrumb-right {
+            text-align: right;
+        }
+    </style>
+</head>
+<body class="container">
+    <!-- 菜单导航 -->
+    <div>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="#">管理端</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="{:url('News/upload')}" role="button" data-toggle="dropdown" aria-expanded="false">
+                        新闻快讯</a>                       
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="{:url('News/upload')}">新闻管理</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#">通知管理</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">图片管理</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">导航栏编辑</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{:url('User/index')}">用户管理</a>
+                    </li>
+                </ul>
+                <form class="form-inline my-2 my-lg-0">
+                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                </form>
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a href="{:url('Login/logOut')}" class="btn btn-outline-danger">注销</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+    <!--导航结束-->
+    {block name="content"}
+    {/block}
+</body>

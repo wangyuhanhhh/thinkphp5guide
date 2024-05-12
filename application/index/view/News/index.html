@@ -117,36 +117,40 @@
             <a class="navbar-brand" href="{:url('Web/index')}">
                 <img src="/thinkphp5guide/public/static/picture/top.jpg" width="55" height="55" alt="首页">
             </a>
-           
-          
+                    
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-              <ul class="navbar-nav mr-auto">
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="{:url('News/index')}" role="button" data-toggle="dropdown" aria-expanded="false">
-                      新闻动态
-                    </a>
-                    <div class="dropdown-menu">
-                      <a class="dropdown-item" href="{:url('News/index')}">新闻快讯</a>
-                      <a class="dropdown-item" href="{:url('Notice/index')}">通知公告</a>
-                    </div>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="{:url('Experiment/index')}" role="button" data-toggle="dropdown" aria-expanded="false">
-                      实验教学
-                    </a>
-                    <div class="dropdown-menu">
-                      <a class="dropdown-item" href="{:url('Experiment/index')}">专业实验</a>
-                      <a class="dropdown-item" href="#">创新创业实验</a>
-                      <a class="dropdown-item" href="#">跨专业综合实验</a>
-                    </div>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{:url('Download/index')}">资料下载</a>
-                </li>
-                  <li class="nav-item">
-                    <a class="nav-link disabled">天津职业技术师范大学</a>
-                </li>
-              </ul>
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="{:url('News/index')}" role="button" data-toggle="dropdown" aria-expanded="false">
+                        新闻动态
+                        </a>
+                        <div class="dropdown-menu">
+                        <a class="dropdown-item" href="{:url('News/index')}">新闻快讯</a>
+                        <a class="dropdown-item" href="{:url('Notice/index')}">通知公告</a>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="{:url('Experiment/index')}" role="button" data-toggle="dropdown" aria-expanded="false">
+                        实验教学
+                        </a>
+                        <div class="dropdown-menu">
+                        <a class="dropdown-item" href="{:url('Experiment/index')}">专业实验</a>
+                        <a class="dropdown-item" href="#">创新创业实验</a>
+                        <a class="dropdown-item" href="#">跨专业综合实验</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{:url('Download/index')}">资料下载</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link disabled">天津职业技术师范大学</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a href="{:url('Login/index')}" class="btn btn-outline-success">登录</a>
+                    </li>
+                </ul>
             </div>
           </nav>
 </div>
@@ -173,7 +177,6 @@
                    </li>
                 </ul>
             </div>
-
             <div class="col-md-10">
                 <div class="breadcrumb">
                     <h2 class="inline-header breadcrumb-right">新闻快讯</h2>
@@ -185,7 +188,7 @@
                       <p class="lead">This is a modified jumbotron that occupies the entire horizontal space of its parent.</p>
                       <ul class="list-unstyled">
                         {volist name="newses" id="news"}
-                        <li><a href="#" class="bullet-text">{$news->getData('text')}</a></li>
+                        <li><a href="#" class="bullet-text">{$news->getData('Description')}</a></li>
                         {/volist}
                       </ul> 
                       <!-- 显示分页导航 -->
