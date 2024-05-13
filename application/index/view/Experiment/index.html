@@ -3,9 +3,6 @@
 <head>
     <meta charset="utf-8">
     <title>实验教学</title>
-
-    <script src="/thinkphp5guide/public/static/bootstrap-4.6.2-dist/jquery-3.5.1.slim.min.js"  crossorigin="anonymous"></script>
-    <script src="/thinkphp5guide/public/static/bootstrap-4.6.2-dist/bootstrap-4.6.2.bundle.min.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" type="text/css" href="/thinkphp5guide/public/static/bootstrap-4.6.2-dist/css/bootstrap.min.css">
     <style type="text/css">
     .breadcrumb {
@@ -28,6 +25,21 @@
     a:hover {
         color: #BA55D3;
         text-decoration: none;
+    }
+
+    /* 以下三项是调整bootsrap下拉菜单中的字体颜色 */
+    .nav-link {  
+    color: #651b78 !important;  
+    }  
+    
+    /* 当链接被点击或访问时 */  
+    .nav-link:hover, .nav-link:focus, .nav-link:active {  
+        color: #BA55D3 !important;  
+    }  
+    
+    /* 禁用链接 */  
+    .nav-link.disabled {  
+        color: #bd8ec8 !important;  
     }
     </style>
 
@@ -128,5 +140,7 @@
             </div>
         </div>
     </div>
+<script src="/thinkphp5guide/public/static/bootstrap-4.6.2-dist/jquery-3.5.1.slim.min.js"  crossorigin="anonymous"></script>
+<script src="/thinkphp5guide/public/static/bootstrap-4.6.2-dist/bootstrap-4.6.2.bundle.min.js" crossorigin="anonymous"></script>
 </body>
 </html>
