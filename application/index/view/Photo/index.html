@@ -14,10 +14,10 @@
             
             <th>操作</th>
         </tr>
-        {volist name="photo" id="id" key="key"}
+        {volist name="Photos" id="photo" key="key"}
         <tr>
             <td>{$photo.id}</td>
-            <td>{$photo.Description}</td>
+            <td>{$photo.description}</td>
             <td>
                 <a href="{:url('edit', ['id' => $photo.id])}">编辑</a>
                 &nbsp;&nbsp;
