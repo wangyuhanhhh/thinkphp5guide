@@ -23,6 +23,5 @@ class DownloadController extends Controller
         //返回数据
         return $htmls;
 
-
     }
 }
