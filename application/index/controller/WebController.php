@@ -18,9 +18,9 @@ class WebController extends Controller
     public function index()
     {
         //查询新闻快讯数据(部分)用于显示
-        $newsList = News::limit(4)->select();
+        $newsList = News::limit(6)->select();
         $noticeList = Notice::limit(5)->select();
-        $experimentList = Experiment::limit(5)->select();
+        $experimentList = Experiment::limit(6)->select();
         $downloadList = Download::limit(5)->select();
 
         //将查询的内容传给V层
