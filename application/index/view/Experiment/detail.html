@@ -2,7 +2,7 @@
 <html lang="zh-cn">
 <head>
     <meta charset="utf-8">
-    <title>资料下载</title>
+    <title>实验教学</title>
     <link rel="stylesheet" type="text/css" href="/thinkphp5guide/public/static/bootstrap-4.6.2-dist/css/bootstrap.min.css">
     <style type="text/css">
     .breadcrumb {
@@ -42,13 +42,23 @@
         color: #bd8ec8 !important;  
     }
 
-    .news-item {  
-        display: flex;  
-        align-items: center;  
-        margin-bottom: 10px; /* 控制新闻条目之间的间距 */
-        border-bottom: 1px solid #ccc; /* 新闻内容下的横线 */  
-        padding-bottom: 5px; /* 内容与横线之间的间距 */    
-    }  
+    .purple-box {  
+    /* 设置盒子的宽度和高度，可以根据需要调整 */  
+    width: 1200px;  
+    height: 200px;  
+          
+    background-color: purple;  /* 设置背景颜色为紫色 */ 
+          
+    margin: 50px auto; /* 上下边距为50px，左右自动居中 */  
+         
+    border: 1px solid #000; /* 1像素的黑色实线边框 */  
+    }
+
+    .title-Style {
+        font-size: xx-large;
+        font-weight: bold;
+        text-align: center;
+    }
     </style>
 
 </head>
@@ -111,34 +121,55 @@
             <div class="col-md-2">
                 <ul class="nav flex-column col-">
                     <li class="nav-item">
-                        <a class="nav-link disabled"><h4>资料下载</h4></a>
+                        <a class="nav-link disabled"><h4>实验教学</h4></a>
                     </li>
-                </ul>
+                    <li class="nav-item">
+                         <a class="nav-link" href="{:url('Experiment/index')}"><h4>专业实验</h4></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><h4>创新创业实验</h4></a>
+                    </li>
+                    <li class="nav-item">
+                    <a class="nav-link" href="#"><h4>跨专业综合实验</h4></a>
+                    </li>
+                  </ul>
             </div>
 
             <div class="col-md-10">
                 <div class="breadcrumb">
-                    <h2 class="inline-header breadcrumb-right">资料下载</h2>
+                    <h2 class="inline-header breadcrumb-right">实验教学</h2>
                 <span class="inline-span"><a href="{:url('Web/index')}">网站首页</a></span>
                 </div>
-        
                 <div class="jumbotron jumbotron-fluid">
                     <div class="container">
-                      <h1 class="display-4">资料目录</h1>
-                      <ul class="list-unstyled">
-                        {volist name="downloads" id="download"}
-                        <li class="news-item"><a href="#" class="bullet-text">{$download->getData('name')}</a></li>
-                        {/volist}
-                      </ul>          
+                      <h1 class="display-4">{$experiment.name}</h1>
+                      <p class="lead"></p>        
                     </div>
-                    <!-- 显示分页导航 -->
-                    <div class="pagination">
-                      {$downloads->render()}
-                    </div>  
+                </div>
+                <!-- 上一条 -->
+                <div id="news-footer">
+                    {if condition="$prevId"}
+                    <!-- 如果有上一条新闻生成链接 -->
+                    <a href="{:url('experiment/detail', ['id' => $prevId])}"><<上一个实验： {$experimentList[$prevIndex]['name']}</a>
+                    {else}
+                    <!--如果没有上一个 -->
+                    <h3>已经是第一个实验了！</h3>
+                    {/if}
+                </div>
+                <!-- 下一条 -->
+                <div id="news-footer">
+                    {if condition="$nextId"}
+                    <!-- 如果有下一条新闻生成链接 -->
+                    <a href="{:url('experiment/detail', ['id' => $nextId])}">>>下一个实验： {$experimentList[$nextIndex]['name']}</a>
+                    {else}
+                    <!--如果没有下一个 -->
+                    <h3>已经是最后一个实验了！</h3>
+                    {/if}
                 </div>
             </div>
-        </div>     
+        </div>
     </div>
+    <div class="purple-box"></div>
 <script src="/thinkphp5guide/public/static/bootstrap-4.6.2-dist/jquery-3.5.1.slim.min.js"  crossorigin="anonymous"></script>
 <script src="/thinkphp5guide/public/static/bootstrap-4.6.2-dist/bootstrap-4.6.2.bundle.min.js" crossorigin="anonymous"></script>
 </body>

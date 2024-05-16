@@ -15,6 +15,7 @@ class NewsController extends Controller
     {
         return $this->fetch();
     }
+
     /**
      * 删除
      */
@@ -38,6 +39,63 @@ class NewsController extends Controller
         //跳转
         return $this->success('删除成功', url('upload'));
     }
+
+    /**
+     * 根据新闻id获取正文
+     */
+    public function detail($id) 
+    {
+        //根据id从数据库中检索新闻数据
+        $news = Db::name('news')->find($id);
+        
+        //获取新闻列表(desc降序排列;asc升序排列)
+        $newsList = Db::name('news')->order('id', 'asc')->select(); 
+       
+        // 找出当前新闻在列表中的位置($currentPosition是键值) 
+        $currentPosition = array_search($news, $newsList, true);
+       
+        //如果没有找到(可能是因为列表不完整或当前新闻不在列表中)，则默认为第一条
+        if ($currentPosition === false) {
+            $nextId = $newsList[0]['id'];
+        } else {
+            //获取下一条新闻的键值(注意检查边界条件)
+            $nextIndex = $currentPosition + 1;
+
+            //获取上一条新闻的键值
+            $prevIndex = $currentPosition - 1;
+
+            if($prevIndex >= 0) {
+                $prevId = $newsList[$prevIndex]['id'];
+            } else {
+                //如果已经是第一条新闻了，设置默认
+                $prevId = null;
+            }
+
+            if (isset($newsList[$nextIndex])) {
+                $nextId = $newsList[$nextIndex]['id'];
+            } else {
+                //如果没有下一个新闻，设置默认提示
+                $nextId = null;
+            }
+        }
+
+        //传数据到模版
+        $this->assign('news', $news);
+        $this->assign('nextIndex', $nextIndex);
+        $this->assign('prevIndex', $prevIndex);
+        $this->assign('prevId', $prevId);
+        $this->assign('nextId', $nextId);
+        $this->assign('newsList', $newsList);
+
+        if(!$news) {
+            //如果找不到新闻，抛出异常
+            $this->error('新闻不存在');
+        }
+
+        //将新闻数据传给V层，同时渲染出模版
+        return $this->fetch('detail', ['new' => $news]);
+    }
+
 
     /**
      * 读取数据
@@ -120,7 +178,7 @@ class NewsController extends Controller
             return '没有文件被上传！';
         }
         //return $this->fetch();
-    }
+    }  
 
     /**
      * 置顶文件

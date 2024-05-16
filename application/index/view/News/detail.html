@@ -41,29 +41,31 @@
     .nav-link.disabled {  
         color: #bd8ec8 !important;  
     }
-  
-    .news-item {  
-        display: flex;  
-        align-items: center;  
-        margin-bottom: 10px; /* 控制新闻条目之间的间距 */
-        border-bottom: 1px solid #ccc; /* 新闻内容下的横线 */  
-        padding-bottom: 5px; /* 内容与横线之间的间距 */    
-    }
-    
+
     .purple-box {  
     /* 设置盒子的宽度和高度，可以根据需要调整 */  
     width: 1200px;  
     height: 200px;  
-        
-    /* 设置背景颜色为紫色 */  
-    background-color: purple;  
-        
-    /* 如果你想要盒子在页面上居中显示 */  
+          
+    background-color: purple;  /* 设置背景颜色为紫色 */ 
+          
     margin: 50px auto; /* 上下边距为50px，左右自动居中 */  
-        
-    /* 设置边框，以便在视觉上看到盒子的边界 */  
+         
     border: 1px solid #000; /* 1像素的黑色实线边框 */  
     }
+
+    .title-Style {
+        font-size: xx-large;
+        font-weight: bold;
+        text-align: center;
+    }
+
+    .info-bar {  
+    background-color: #e7e7ee;  
+    height: 30px;  
+    line-height: 30px; /* 使文本垂直居中（如果只有单行文本）*/  
+    text-align: center; /* 使文本水平居中 */  
+    }  
     </style>
 
 </head>
@@ -115,8 +117,8 @@
                     </li>
                 </ul>
             </div>
-        </nav>
-    </div>
+          </nav>
+</div>
 
     <!-- 图片 -->
     <div class="" style="width: 1200px;height: 175px;">
@@ -143,27 +145,40 @@
             <div class="col-md-10">
                 <div class="breadcrumb">
                     <h2 class="inline-header breadcrumb-right">新闻快讯</h2>
-                <span class="inline-span"><a href="{:url('Web/index')}">网站首页</a></span>
+                    <span class="inline-span"><a href="{:url('Web/index')}">网站首页</a></span>
                 </div>
-                <div class="jumbotron jumbotron-fluid">
+                <div class="jumbotron jumbotron-fluid" style="background-color: rgb(248, 243, 237);">
                     <div class="container">
-                      <a href="#"><h1 class="display-4">重要新闻</h1></a>
-                      <p class="lead">This is a modified jumbotron that occupies the entire horizontal space of its parent.</p>
-                      <ul class="list-unstyled">
-                        {volist name="newses" id="news"}
-                        <li class="news-item"><a href="{:url('news/detail', ['id' => $news['id']])}" class="bullet-text">{$news->getData('Description')}</a></li>
-                        {/volist}
-                      </ul> 
-                      <!-- 显示分页导航 -->
-                      <div class="pagination">
-                        {$newses->render()}
-                      </div>        
+                       
+                      <h2 class="display-4 title-Style">{$new.Description}</h2>
+                      <div class="info-bar" style="margin-top: 10px; margin-bottom: 10px;"><p>发布日期：{$new.time}&#20&#20&#20&#20&#20&#20&#20&#20作者：{$new.author}</p></div>              
+                      <p class="lead">{$new.content}</p>        
                     </div>
+                </div>
+                <!-- 上一条 -->
+                <div id="news-footer">
+                    {if condition="$prevId"}
+                    <!-- 如果有下一个新闻，生成链接 -->
+                    <a href="{:url('news/detail', ['id' => $prevId])}"><<上一条新闻:  {$newsList[$prevIndex]['Description']}</a>
+                    {else}
+                    <!-- 如果没有上一个新闻，显示提示 -->
+                    <h3>已经是最新新闻了！</h3>
+                    {/if}
+                </div>
+                <!-- 下一条 -->
+                <div id="news-footer">
+                    {if condition="$nextId"}
+                    <!-- 如果有下一个新闻，生成链接 -->
+                    <a href="{:url('news/detail', ['id' => $nextId])}">>>下一条新闻:  {$newsList[$nextIndex]['Description']}</a>
+                    {else}
+                    <!-- 如果没有下一个新闻，显示提示 -->
+                    <h3>没有更多新闻了！</h3>
+                    {/if}
                 </div>
             </div>
         </div>
-    </div>
-    <div class="purple-box"></div> 
+    </div> 
+    <div class="purple-box"></div>
     <script src="/thinkphp5guide/public/static/bootstrap-4.6.2-dist/jquery-3.5.1.slim.min.js"  crossorigin="anonymous"></script>
     <script src="/thinkphp5guide/public/static/bootstrap-4.6.2-dist/bootstrap-4.6.2.bundle.min.js" crossorigin="anonymous"></script>  
 </body>

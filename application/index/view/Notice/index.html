@@ -40,6 +40,29 @@
     .nav-link.disabled {  
         color: #bd8ec8 !important;  
     }
+  
+    .news-item {  
+        display: flex;  
+        align-items: center;  
+        margin-bottom: 10px; /* 控制新闻条目之间的间距 */
+        border-bottom: 1px solid #ccc; /* 新闻内容下的横线 */  
+        padding-bottom: 5px; /* 内容与横线之间的间距 */    
+    }
+
+    .purple-box {  
+    /* 设置盒子的宽度和高度，可以根据需要调整 */  
+    width: 1200px;  
+    height: 200px;  
+        
+    /* 设置背景颜色为紫色 */  
+    background-color: purple;  
+        
+    /* 如果你想要盒子在页面上居中显示 */  
+    margin: 50px auto; /* 上下边距为50px，左右自动居中 */  
+        
+    /* 设置边框，以便在视觉上看到盒子的边界 */  
+    border: 1px solid #000; /* 1像素的黑色实线边框 */  
+    }
     </style>
 
 </head>
@@ -115,7 +138,7 @@
 
             <div  class="col-md-10">   
                 <div class="breadcrumb">
-                    <h2 class="inline-header breadcrumb-right">新闻快讯</h2>
+                    <h2 class="inline-header breadcrumb-right">通知公告</h2>
                 <span class="inline-span"><a href="{:url('Web/index')}">网站首页</a></span>
                 </div>
                 <div class="jumbotron jumbotron-fluid">
@@ -124,7 +147,7 @@
                     <p class="lead">This is a modified jumbotron that occupies the entire horizontal space of its parent.</p>
                     <ul class="list-unstyled">
                         {volist name="notices" id="notice"}
-                        <li><a href="#" class="bullet-text">{$notice->getData('text')}</a></li>
+                        <li class="news-item"><a href="{:url('notice/detail', ['id' => $notice['id']])}" class="bullet-text">{$notice->getData('title')}</a></li>
                         {/volist}
                     </ul>          
                     </div>
@@ -135,6 +158,7 @@
                 </div>
             </div>
     </div>
+    <div class="purple-box"></div>
     <script src="/thinkphp5guide/public/static/bootstrap-4.6.2-dist/jquery-3.5.1.slim.min.js"  crossorigin="anonymous"></script>
     <script src="/thinkphp5guide/public/static/bootstrap-4.6.2-dist/bootstrap-4.6.2.bundle.min.js" crossorigin="anonymous"></script>   
 </body>

@@ -42,11 +42,26 @@
     .nav-link.disabled {  
         color: #bd8ec8 !important;  
     }
+
+    .purple-box {  
+    /* 设置盒子的宽度和高度，可以根据需要调整 */  
+    width: 1200px;  
+    height: 200px;  
+        
+    /* 设置背景颜色为紫色 */  
+    background-color: purple;  
+        
+    /* 如果你想要盒子在页面上居中显示 */  
+    margin: 50px auto; /* 上下边距为50px，左右自动居中 */  
+        
+    /* 设置边框，以便在视觉上看到盒子的边界 */  
+    border: 1px solid #000; /* 1像素的黑色实线边框 */  
+    }
     </style>
 
 </head>
 <body class="container">
-
+    <div>
     <!-- 校徽 -->
     <div style="width: 1200px;height: 175px;">
         <img style="height: 170px;width: 1200px;"
@@ -153,11 +168,9 @@
                         </div>
                         <div class="col-md-6 mb-3">
                             <div>
-                                <ul>
-                                    <?php foreach($newsList as $news): ?>
-                                        <li><a href="#"><p class="font"><?php echo $news['Description']; ?></p></a></li>                       
-                                    <?php endforeach ?>
-                                </ul>
+                                <?php foreach($newsList as $news): ?>
+                                    <li class="font"><a href="{:url('news/detail', ['id' => $news['id']])}"><?php echo $news['Description']; ?></a></li>                       
+                                <?php endforeach ?>
                             </div>
                         </div>
                     </div>
@@ -170,7 +183,7 @@
                 </div>
                 <div>
                     <?php foreach($experimentList as $experiment): ?>
-                        <li class="font"><a href="#"><?php echo $experiment['name']; ?></a></li>
+                        <li class="font"><a href="{:url('experiment/detail', ['id' => $experiment['id']])}"><?php echo $experiment['name']; ?></a></li>
                     <?php endforeach ?>
                 </div>
             </div>
@@ -189,7 +202,7 @@
                 </div>
                 <div>
                     <?php foreach($noticeList as $notice): ?>
-                        <li class="font"><a href="#"><?php echo $notice['text']; ?></a></li>
+                        <li class="font"><a href="{:url('notice/detail', ['id' => $notice['id']])}"><?php echo $notice['title']; ?></a></li>
                     <?php endforeach ?>
                 </div>
             </div>
@@ -200,7 +213,7 @@
                 </div>
                 <div>
                     <?php foreach($downloadList as $download): ?>
-                        <a href="#"><li class="font"><?php echo $download['name']; ?></li></a>
+                        <li class="font"><a href="#"><?php echo $download['name']; ?></a></li>
                     <?php endforeach ?>
                 </div>
             </div>
@@ -220,6 +233,8 @@
             </div>
         </div>
     </div>
+    <div class="purple-box"></div>
+</div>
 <script src="/thinkphp5guide/public/static/bootstrap-4.6.2-dist/jquery-3.5.1.slim.min.js"  crossorigin="anonymous"></script>
 <script src="/thinkphp5guide/public/static/bootstrap-4.6.2-dist/bootstrap-4.6.2.bundle.min.js" crossorigin="anonymous"></script>
 </body>
