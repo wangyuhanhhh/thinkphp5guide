@@ -134,67 +134,35 @@ class NewsController extends Controller
 
     public function insert()
     {
-        $file = request()->file('file');
-       
-        if ($file) 
-        {
-            $info = $file->move(ROOT_PATH . 'public' . DS . 'uploads');
-            if ($info) 
-            {
-                //获取文件描述信息即文件标题
-                $description = request()->post('Description');
-                //获取文件上传日期
-                $uploadDate = request()->post('UploadDate');
-                // 获取保存的文件名
-                $fileName = $info->getSaveName();                
-                // 获取文件扩展名
-                $fileExtension = $info->getExtension();  
-                $news = new News();
-                $data = [
-                    'NewsName' => $fileName,
-                    'NewsPath' => $info->getPathname(),
-                    'Description' => $description,
-                    'Extension' => $fileExtension,
-                    'UploadDate' => $uploadDate,
-                ];
-                $saveResult = $news->save($data);             
-                if ($saveResult) 
-                {
-                    // 保存成功
-                    return '文件上传并保存成功！';
-                } else 
-                {
-                    // 保存失败
-                    return '文件上传失败，保存数据库时出错！';
-                }
-            } else 
-            {
-                // 文件移动失败，输出错误信息
-                return '文件移动失败';
-            }
-        } else 
-        {
-            // 没有上传文件
-            return '没有文件被上传！';
-        }
-        //return $this->fetch();
+        //接收传入数据
+        $postData = Request::instance()->post();
+        //实例化空对象
+        $News = new News();
+        //插入信息
+        $News->Description = $postData['Description'];
+        $News->author = $postData['author'];
+        $News->content = $postData['content'];
+        $News->time = $postData['time'];
+        //保存                
+        $News->save();
+        return $this->success('新增成功', url('News/upload'));
     }  
 
     /**
      * 置顶文件
-     * newsId form表单传过来的id值
-     * id 置顶操作
+     * id form表单传过来的id值
+     * NewsId 置顶操作
      */
     public function setTop() {  
-        //接受数据
+        //接收数据
         $postData = Request::instance()->post();
-        $id = $postData['newsId'];
-        if (is_null($id)) {
+        $NewsId = $postData['id'];
+        if (is_null($NewsId)) {
             return $this->error('请选择要置顶的新闻', url('upload'));
         }
         $News  = new News();
         //调用M层中的top方法
-        $result = $News->top($id);
+        $result = $News->top($NewsId);
         if ($result) {
             return $this->success('置顶成功', url('upload'));
         } else {

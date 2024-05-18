@@ -10,21 +10,28 @@
         <div class="col-md-12">
             <!-- 整合为一个表单 -->
             <form action="{:url('News/insert')}" method="post" enctype="multipart/form-data">
-                <!-- 文件上传部分 -->
-                <div class="form-group">
-                    <input type="file" name="file" required>
-                </div>
-    
                 <!-- 文本输入框 -->
                 <div class="form-group">
                     <label for="Description">请输入新闻标题：</label>
                     <textarea type="text" id="Description" name="Description" rows="3" required></textarea>
                 </div>
+
+                <!-- 文本输入框 -->
+                <div class="form-group">
+                    <label for="author">请输入新闻作者：</label>
+                    <textarea type="text" id="author" name="author" rows="3" required></textarea>
+                </div>
+
+                <!-- 文本输入框 -->
+                <div class="form-group">
+                    <label for="content">请输入新闻内容：</label>
+                    <textarea type="text" id="content" name="content" rows="3" required></textarea>
+                </div>
     
                 <!-- 日期选择器 -->
                 <div class="form-group">
-                    <label for="UploadDate">请选择新闻发布日期：</label>
-                    <input type="date" id="UploadDate" name="UploadDate" required>
+                    <label for="time">请选择新闻发布日期：</label>
+                    <input type="date" id="time" name="time" required>
                 </div>
     
                 <!-- 提交按钮 -->

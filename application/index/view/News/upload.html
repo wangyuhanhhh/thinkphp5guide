@@ -35,8 +35,9 @@
                         <table class="table table-hover table-bordered"> 
                             <tr>
                                 <th>序号</th>
-                                <th>文件名</th>
+                                <th>新闻名</th>
                                 <th>新闻时间</th>
+                                <th>作者</th>
                                 <th>操作</th>
                                 <th>置顶</th>
                             </tr>          
@@ -45,14 +46,15 @@
                                 <th>{$key}</th>
                                 <th>{$newsItem.Description}</th>
                                 <th>{$newsItem.time}</th>
+                                <th>{$newsItem.author}</th>
                                 <th>
-                                    <a href="{:url('edit', ['id' => $newsItem.NewsId])}">编辑</a>
+                                    <a href="{:url('edit', ['id' => $newsItem.id])}">编辑</a>
                                     &nbsp;&nbsp;
-                                    <a href="{:url('delete', ['id' => $newsItem.NewsId])}">删除</a>
+                                    <a href="{:url('delete', ['id' => $newsItem.id])}">删除</a>
                                 </th>
                                 <th>
                                     <form action="{:url('setTop')}" method="post" style="display:inline;">
-                                        <input type="hidden" name="newsId" value="{$newsItem.NewsId}">
+                                        <input type="hidden" name="id" value="{$newsItem.id}">
                                         <button type="submit" class="btn btn-sm btn-secondary">置顶新闻</button>
                                     </form>
                                 </th>
