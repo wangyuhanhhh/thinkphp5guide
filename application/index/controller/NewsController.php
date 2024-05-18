@@ -128,7 +128,7 @@ class NewsController extends Controller
      * id 置顶操作
      */
     public function setTop() {  
-        //接受数据
+        //接收数据
         $postData = Request::instance()->post();
         $id = $postData['newsId'];
         if (is_null($id)) {

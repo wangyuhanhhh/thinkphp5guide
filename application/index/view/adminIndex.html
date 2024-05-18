@@ -7,7 +7,19 @@
     <script src="/thinkphp5guide/public/static/bootstrap-4.6.2-dist/bootstrap-4.6.2.bundle.min.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" type="text/css" href="/thinkphp5guide/public/static/bootstrap-4.6.2-dist/css/bootstrap.min.css">
     <style>
-        /*新闻快讯和当前位置在一行上显示*/
+        /*设置卡片的大小*/
+        .cardstyle {
+            width: 100%; /* 设置卡片宽度为100%，或者您可以选择一个具体的像素值 */
+            height:280px;
+            margin-bottom: 20px; /* 设置卡片之间的间距 */
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); /* 添加阴影效果 */
+            overflow: hidden; /* 防止内容溢出卡片边界 */
+        }
+        .card-img {
+            width: 335px;
+            height: 225px;
+        }
+
         /*新闻快讯和当前位置在一行上显示*/
         .inline-header, .inline-span {
             display: inline-block;

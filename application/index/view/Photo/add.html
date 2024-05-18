@@ -1,32 +1,19 @@
 <!DOCTYPE html>
 <html>
 <head lang="zh-cn">
-	<meta charset="utf-8">
+	<meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1">
 	<title>上传图片</title>
+    <script src="/thinkphp5guide/public/static/bootstrap-4.6.2-dist/jquery-3.5.1.slim.min.js"  crossorigin="anonymous"></script>
+    <script src="/thinkphp5guide/public/static/bootstrap-4.6.2-dist/bootstrap-4.6.2.bundle.min.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="/thinkphp5guide/public/static/bootstrap-4.6.2-dist/css/bootstrap.min.css">
 </head>
 <body class="container">
 	<!-- 上传文件一个盒子 -->
 	<div class="row">
-        <div class="col-md-12">
-            <!-- 上传首页（多张）图片 -->
-            <form action="{:url('Photo/upload')}" method="post" enctype="multipart/form-data">
-                <!-- 图片上传部分 -->
-                <div class="form-group">
-                    <label for="file">上传首页轮播图片：</label><br>
-                    <input type="file" name="file[]" required> <br> 
-                    <input type="file" name="file[]" required> <br> 
-                    <input type="file" name="file[]" required> <br>
-                </div>
-                <!-- 日期选择器 -->
-                <div class="form-group">
-                    <label for="UploadDate">请选择新闻发布日期：</label>
-                    <input type="date" id="UploadDate" name="UploadDate" required>
-                </div>   
-                <!-- 提交按钮 -->
-                <button type="submit" class="btn btn-primary">提交</button>
-            </form>
+        <div class="col-md-12" style="margin-top: 20px;">
             <!-- 上传新闻动态图片 -->
             <form action="{:url('Photo/insert')}" method="post" enctype="multipart/form-data">
+                <input type="hidden" name="type" value="<?php echo session('type') ?>">
                 <!-- 图片上传部分 -->
                 <div class="form-group">
                     <label for="file">上传新闻动态图片：</label>
@@ -34,18 +21,16 @@
                 </div>
                 <!-- 日期选择器 -->
                 <div class="form-group">
-                    <label for="UploadDate">请选择新闻发布日期：</label>
+                    <label for="UploadDate">请选择图片上传时间：</label>
                     <input type="date" id="UploadDate" name="UploadDate" required>
                 </div>   
                 <!-- 提交按钮 -->
                 <button type="submit" class="btn btn-primary">提交</button>
             </form>
-    
             <!-- 显示上传文件的区域 -->
             <div id="uploaded-file">
             </div>
         </div>
     </div>
-    
 </body>
 </html>
