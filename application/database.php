@@ -13,7 +13,7 @@ return [
     // 数据库类型
     'type'           => 'mysql',
     // 服务器地址
-    'hostname'       => 'docker-mysql.5.6-1',
+    'hostname'       => 'localhost:3306',
     // 数据库名
     'database'       => 'tp5',
     // 用户名
