@@ -56,7 +56,7 @@ class PhotoController extends Controller{
                 $getPath = $info->getSaveName();
                 //将\替换为/ 一个\代表转义字符，使用两个\\告诉php将其视为普通反斜杠
                 $savePath = str_replace('\\', '/', $getPath);
-                $path = '/thinkphp5guide/public/uploads/photo/' . $savePath;   
+                $path = '/thinkphp5guide/public/uploads/photo/' . $save;   
                 $uploadDate = request()->post('UploadDate');
                 $extension = $info->getExtension();
                 $photo = new photo();
