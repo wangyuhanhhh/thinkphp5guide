@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <title>{block name="title"}标题{/block}</title>
+    <link rel="stylesheet" type="text/css" href="/thinkphp5guide/public/static/bootstrap-4.6.2-dist/css/bootstrap.min.css">
+    <style type="text/css">
+    .breadcrumb {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .bullet-text::before {
+        content: '\2022'; /* 使用Unicode编码生成圆点符号 */
+        color: #000; /* 设置圆点颜色 */
+        margin-right: 8px; /* 调整圆点与文本之间的间距 */
+    }
+
+    a {
+        color: 	#778899;
+        text-decoration: none;
+    }
+
+    a:hover {
+        color: #BA55D3;
+        text-decoration: none;
+    }
+
+    /* 以下三项是调整bootsrap下拉菜单中的字体颜色 */
+    .nav-link {  
+    color: #651b78 !important;  
+    }  
+    
+    /* 当链接被点击或访问时 */  
+    .nav-link:hover, .nav-link:focus, .nav-link:active {  
+        color: #BA55D3 !important;  
+    }  
+    
+    /* 禁用链接 */  
+    .nav-link.disabled {  
+        color: #bd8ec8 !important;  
+    }
+  
+    .news-item {  
+        display: flex;  
+        align-items: center;  
+        margin-bottom: 10px; /* 控制新闻条目之间的间距 */
+        border-bottom: 1px solid #ccc; /* 新闻内容下的横线 */  
+        padding-bottom: 5px; /* 内容与横线之间的间距 */    
+    }
+    
+    .purple-box {  
+    /* 设置盒子的宽度和高度，可以根据需要调整 */  
+    width: 1200px;  
+    height: 200px;  
+        
+    /* 设置背景颜色为紫色 */  
+    background-color: purple;  
+        
+    /* 如果你想要盒子在页面上居中显示 */  
+    margin: 50px auto; /* 上下边距为50px，左右自动居中 */  
+        
+    /* 设置边框，以便在视觉上看到盒子的边界 */  
+    border: 1px solid #000; /* 1像素的黑色实线边框 */  
+    }
+    </style>
+
+</head>
+<body class="container">
+  <!-- 校徽 -->
+  <div style="width: 1200px;height: 175px;">
+    <img style="height: 170px;width: 1200px;"
+        src="/thinkphp5guide/public/static/picture/10.png" />
+</div>
+<!-- 菜单 -->
+<div class="row">
+    <div class="col-md-12">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="{:url('Web/index')}">
+                <img src="/thinkphp5guide/public/static/picture/top.jpg" width="55" height="55" alt="首页">
+            </a>
+                    
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="{:url('News/index')}" role="button" data-toggle="dropdown" aria-expanded="false">
+                        新闻动态
+                        </a>
+                        <div class="dropdown-menu">
+                        <a class="dropdown-item" href="{:url('News/index')}">新闻快讯</a>
+                        <a class="dropdown-item" href="{:url('Notice/index')}">通知公告</a>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="{:url('Experiment/index')}" role="button" data-toggle="dropdown" aria-expanded="false">
+                        实验教学
+                        </a>
+                        <div class="dropdown-menu">
+                        <a class="dropdown-item" href="{:url('Experiment/index')}">专业实验</a>
+                        <a class="dropdown-item" href="#">创新创业实验</a>
+                        <a class="dropdown-item" href="#">跨专业综合实验</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{:url('Download/index')}">资料下载</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link disabled">天津职业技术师范大学</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a href="{:url('Login/loginForm')}" class="btn btn-outline-success">登录</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+
+    <!-- 图片 -->
+    <div class="" style="width: 1200px;height: 175px;">
+        <img style="height: 170px;width: 1200px;"
+        src="/thinkphp5guide/public/static/picture/9.png">
+    </div>
+{block name="content"}
+{/block}
+</body>
