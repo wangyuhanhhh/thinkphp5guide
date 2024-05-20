@@ -23,11 +23,13 @@
                     <span class="inline-span"><a href="{:url('Web/index')}">网站首页</a></span>
                 </div>
                 <div class="jumbotron jumbotron-fluid" style="background-color: rgb(248, 243, 237);">
-                    <div class="container">
-                       
-                      <h2 class="display-4 title-Style">{$new.Description}</h2>
-                      <div class="info-bar" style="margin-top: 10px; margin-bottom: 10px;"><p>发布日期：{$new.time}&#20&#20&#20&#20&#20&#20&#20&#20作者：{$new.author}</p></div>              
-                      <p class="lead">{$new.content}</p>        
+                    <div class="container">                      
+                        <h2 class="display-4 title-Style">{$new.Description}</h2>
+                        <div class="info-bar" style="margin-top: 10px; margin-bottom: 10px;"><p>发布日期：{$new.time}&#20&#20&#20&#20&#20&#20&#20&#20作者：{$new.author}</p></div>              
+                        <p class="lead">{$new.content}</p>
+                        <div class="image-container" style="height: 350px; display: flex; justify-content: center; align-items: center;">
+                        <img src="{$new.photo_path}" style="max-height: 100%; max-width: 100%;">
+                        </div>                               
                     </div>
                 </div>
                 <!-- 上一条 -->
