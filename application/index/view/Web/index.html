@@ -218,7 +218,7 @@
                 </div>
                 <div>
                     <?php foreach($downloadList as $download): ?>
-                        <li class="font"><a href="#"><?php echo $download['name']; ?></a></li>
+                        <li class="font"><a href="<?php echo $download->saveName; ?>"><?php echo $download['name']; ?></a></li>
                     <?php endforeach ?>
                 </div>
             </div>
