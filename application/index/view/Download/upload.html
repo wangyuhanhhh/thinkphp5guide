@@ -1,0 +1,62 @@
+{extend name="adminIndex"}
+{block name="title"}
+资料下载
+{/block}
+{block name="content"}
+    <!-- 图片 -->
+    <div class="" style="width: 1200px;height: 175px;">
+        <img style="height: 170px;width: 1200px;"
+        src="/thinkphp5guide/public/static/picture/9.png">
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <!-- 增加垂直导航栏 -->
+            <div class="col-md-2">
+                <ul class="nav flex-column col-">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><h4>实验上传</h4></a>
+                    </li>
+                    <li class="nav-item">
+                         <a class="nav-link" href="{:url('Download/upload')}"><h4>资料上传</h4></a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-md-10">
+                <div class="breadcrumb">
+                    <h2 class="inline-header breadcrumb-right">资料上传</h2>
+                <span class="inline-span"><a href="{:url('Web/index')}">网站首页</a></span>
+                </div>
+                <div class="col-md-4 text-left">
+                    <a href="{:url('add')}" class="btn btn-primary"><i class="glyphicon glyphicon-plus"></i>&nbsp;增加</a>
+                </div>
+                <div class="container">
+                    <div class="row">
+                        <table class="table table-hover table-bordered">
+                            <tr>
+                                <th>序号</th>
+                                <th>资料</th>
+                                <th>上传时间</th>
+                                <th>操作</th>
+                            </tr> 
+                            {volist name="downloads" id="download" key="key"}
+                            <tr>
+                                <th>{$key}</th>
+                                <th>{$download.name}</th>
+                                <th>{$download.time}</th>
+                                <th>
+                                    <a href="{:url('delete', ['id' => $download.id])}">删除</a>
+                                </th>
+                            </tr> 
+                            {/volist}  
+                        </table>
+                    </div>
+                    <!-- 分页导航栏 -->
+                    <div class="pagination">
+                        {$downloads->render()}
+                    </div>   
+                </div>
+            </div>
+        </div>
+    </div>
+{/block}

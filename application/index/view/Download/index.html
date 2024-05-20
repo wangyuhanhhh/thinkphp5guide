@@ -23,7 +23,7 @@
                       <h1 class="display-4">资料目录</h1>
                       <ul class="list-unstyled">
                         {volist name="downloads" id="download"}
-                        <li class="news-item"><a href="#" class="bullet-text">{$download->getData('name')}</a></li>
+                        <li class="news-item"><a href="<?php echo $download->saveName; ?>" class="bullet-text" download>{$download->getData('name')}</a></li>
                         {/volist}
                       </ul>          
                     </div>
