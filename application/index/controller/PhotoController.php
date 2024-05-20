@@ -10,6 +10,10 @@ class PhotoController extends Controller{
         return $this->fetch();
     }
     
+    public function index() {
+        return $this->fetch();
+    }
+    
     /**
      * 上传插入一张照片
      **/

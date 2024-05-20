@@ -131,17 +131,34 @@ class NewsController extends Controller
         // 将数据返回给用户
         return $htmls;
     }
-
+    /**
+     * $getPath 表单传来的值
+     * $savePath 将\替换成/的地址
+     * $path保存到数据库的地址
+     */
     public function insert()
     {
-        //接收传入数据
-        $postData = Request::instance()->post();
+        //处理图片
+        $file = request()->file('file');
+        if ($file) {
+            $info = $file->move(ROOT_PATH . 'public' . DS . 'uploads' . DS . 'photo');
+            if ($info) {
+                $getPath = $info->getSaveName();
+                //将\替换为/ 一个\代表转义字符，使用两个\\告诉php将其视为普通反斜杠
+                $savePath = str_replace('\\', '/', $getPath);
+                $path = '/thinkphp5guide/public/uploads/photo/' . $savePath;
+            }
+        }   
+
+        //保存文字。接收传入数据
+        $postData = Request::instance()->post();       
         //实例化空对象
         $News = new News();
         //插入信息
         $News->Description = $postData['Description'];
         $News->author = $postData['author'];
         $News->content = $postData['content'];
+        $News->photo_path = $path;
         $News->time = $postData['time'];
         //保存                
         $News->save();
