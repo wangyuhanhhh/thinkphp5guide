@@ -200,7 +200,7 @@ class NewsController extends Controller
         $News = News::get($id);
         if (!is_null($News)) {
             $News->Description = Request::instance()->post('Description');
-            $News->UploadDate = Request::instance()->post('UploadDate');
+            $News->time = Request::instance()->post('time');
             //更新数据
             if (false === $News->save()) {
                 return '更新失败' . $News->getError();
