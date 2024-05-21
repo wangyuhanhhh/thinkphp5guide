@@ -70,7 +70,7 @@ class PhotoController extends Controller{
             $info = $file->validate([
                 'ext' => 'jpg,jpeg,png,gif'
             ])->move(ROOT_PATH . 'public' . DS . 'uploads' . DS . 'photo');
-            if ($info) {               
+            if ($info) {            
                 $getPath = $info->getSaveName();
                 //将\替换为/ 一个\代表转义字符，使用两个\\告诉php将其视为普通反斜杠
                 $savePath = str_replace('\\', '/', $getPath);
@@ -110,8 +110,10 @@ class PhotoController extends Controller{
             ];
             $info = $file->validate($validate)->move(ROOT_PATH . 'public' . DS . 'uploads' . DS . 'photo');
             if ($info) {
+                $getPath = $info->getSaveName();
+                //将\替换为/ 一个\代表转义字符，使用两个\\告诉php将其视为普通反斜杠
                 $savePath = str_replace('\\', '/', $getPath);
-                $path = '/thinkphp5guide/public/uploads/photo/' . $savePath;               
+                $path = '/thinkphp5guide/public/uploads/photo/' . $savePath;        
                 // 更新
                 $updateData = [
                     'UploadDate' => Request::instance()->post('UploadDate'),
