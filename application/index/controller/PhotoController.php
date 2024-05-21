@@ -93,21 +93,39 @@ class PhotoController extends Controller{
 
     //处理编辑表单传过来的信息
     public function update() {
-        //接收数据
-        $id = Request()->instance()->post('id/d');
+        // 接收数据
+        $id = Request::instance()->post('id/d');
+        $file = request()->file('file');
         
-        //获取当前对象
-        $Photo = Photo::get($id);
-        if (!is_null($Photo)) {
-            $Photo->path = Request::instance()->post('path');
-            $Photo->UploadDate = Request::instance()->post('UploadDate');
-            //更新数据
-            if (false === $Photo->save()) {
-                return '更新失败' . $Photo->getError();
-            } 
-            } else {
-                throw new \Exception("所更新的记录不存在", 1);
+        // 获取当前对象
+        $photo = Photo::get($id);
+        if (is_null($photo)) {
+            return $this->error('所更新的记录不存在', url('Photo/index'));
+        }
+
+        // 文件上传
+        if ($file) {
+            $validate = [
+                'ext' => 'jpg,jpeg,png,gif'
+            ];
+            $info = $file->validate($validate)->move(ROOT_PATH . 'public' . DS . 'uploads' . DS . 'photo');
+            if ($info) {
+                $savePath = str_replace('\\', '/', $getPath);
+                $path = '/thinkphp5guide/public/uploads/photo/' . $savePath;               
+                // 更新
+                $updateData = [
+                    'UploadDate' => Request::instance()->post('UploadDate'),
+                    'path' => $path,
+                ];               
+                // 保存
+                if ($photo->save($updateData)) {
+                    return $this->success('更新成功', url('Photo/index'));
+                } else {
+                    return $this->error('更新失败: ' . $photo->getError(), url('Photo/index'));
+                }
             }
-            return $this->success('编辑成功', url('Photo/index'));
+        } else {
+            return $this->error('未接收到文件', url('Photo/index'));
+        }
     }
 }
