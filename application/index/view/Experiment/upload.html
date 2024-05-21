@@ -1,6 +1,6 @@
 {extend name="adminIndex"}
 {block name="title"}
-资料下载
+实验教学
 {/block}
 {block name="content"}
     <!-- 图片 -->
@@ -24,7 +24,7 @@
             </div>
             <div class="col-md-10">
                 <div class="breadcrumb">
-                    <h2 class="inline-header breadcrumb-right">资料上传</h2>
+                    <h2 class="inline-header breadcrumb-right">实验上传</h2>
                 <span class="inline-span"><a href="{:url('Web/index')}">网站首页</a></span>
                 </div>
                 <div class="col-md-4 text-left">
@@ -35,17 +35,17 @@
                         <table class="table table-hover table-bordered">
                             <tr>
                                 <th>序号</th>
-                                <th>资料</th>
+                                <th>实验</th>
                                 <th>上传时间</th>
                                 <th>操作</th>
                             </tr> 
-                            {volist name="downloads" id="download" key="key"}
+                            {volist name="experiments" id="experiment" key="key"}
                             <tr>
                                 <th>{$key}</th>
-                                <th>{$download.name}</th>
-                                <th>{$download.time}</th>
+                                <th>{$experiment.name}</th>
+                                <th>{$experiment.time}</th>
                                 <th>
-                                    <a href="{:url('delete', ['id' => $download.id])}">删除</a>
+                                    <a href="{:url('delete', ['id' => $experiment.id])}">删除</a>
                                 </th>
                             </tr> 
                             {/volist}  
@@ -53,7 +53,7 @@
                     </div>
                     <!-- 分页导航栏 -->
                     <div class="pagination">
-                        {$downloads->render()}
+                       {$experiments->render()}
                     </div>   
                 </div>
             </div>
