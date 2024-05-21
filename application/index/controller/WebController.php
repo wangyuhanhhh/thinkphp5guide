@@ -1,12 +1,14 @@
 <?php
 namespace app\index\controller; //指出该文件的位置
 use think\Controller;   //用于向V层进行数据的传递
+use think\Db;
 use app\common\model\Web;   //首页模型
 use think\Request;  //引用Request
 use app\common\model\News;
 use app\common\model\Notice;
 use app\common\model\Experiment;
 use app\common\model\Download;
+use app\common\model\Photo;
 
 
 /**
@@ -22,12 +24,17 @@ class WebController extends Controller
         $noticeList = Notice::limit(5)->select();
         $experimentList = Experiment::limit(6)->select();
         $downloadList = Download::limit(5)->select();
+        $BigPhotoList = Db::name('photo')->where('type', 1)->select();
+        $SmallPhotoList = Db::name('photo')->where('type', 0)->select();
+        
 
         //将查询的内容传给V层
         $this->assign('newsList', $newsList);
         $this->assign('noticeList', $noticeList);
         $this->assign('experimentList', $experimentList);
         $this->assign('downloadList', $downloadList);
+        $this->assign('BigPhotoList', $BigPhotoList);
+        $this->assign('SmallPhotoList', $SmallPhotoList);
 
         //创建Web对象
         $Web = new Web; 
