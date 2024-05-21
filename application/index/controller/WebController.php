@@ -35,7 +35,6 @@ class WebController extends Controller
         $this->assign('downloadList', $downloadList);
         $this->assign('BigPhotoList', $BigPhotoList);
         $this->assign('SmallPhotoList', $SmallPhotoList);
-
         //创建Web对象
         $Web = new Web; 
         $webs = $Web->select();
