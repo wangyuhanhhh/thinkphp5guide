@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="zh-hans">
+<head>
+    <meta charset="utf-8">
+    <title>编辑数据</title>
+</head>
+<body class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <form action="{:url('update')}" method="post">
+                <div class="form-group">
+                    <label for="title">请输入通知标题：</label>
+                    <textarea type="text" id="title" name="title" rows="3" required>{$Notice->getData('title')}</textarea>
+                </div>
+                <div class="form-group">
+                    <label for="author">请输入通知作者：</label>
+                    <textarea type="text" id="author" name="author" rows="3" required>{$Notice->getData('author')}</textarea>
+                </div>
+                <div class="form-group">
+                    <label for="content">请输入通知内容：</label>
+                    <textarea type="text" id="content" name="content" rows="3" required>{$Notice->getData('content')}</textarea>
+                </div>
+                <!-- 日期选择器 -->
+                <div class="form-group">
+                    <label for="time">请选择新闻发布日期：</label>
+                    <input type="date" id="time" name="time" required>
+                </div>
+    
+                <!-- 提交按钮 -->
+                <button type="submit" class="btn btn-primary">提交</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
