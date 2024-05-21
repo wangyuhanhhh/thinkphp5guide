@@ -1,6 +1,6 @@
 {extend name="adminIndex"}
 {block name="title"}
-新闻管理
+通知管理
 {/block}
 {block name="content"}
     <!-- 图片 -->
@@ -35,26 +35,26 @@
                         <table class="table table-hover table-bordered"> 
                             <tr>
                                 <th>序号</th>
-                                <th>新闻名</th>
-                                <th>新闻时间</th>
+                                <th>通知名</th>
+                                <th>通知时间</th>
                                 <th>作者</th>
                                 <th>操作</th>
                                 <th>置顶</th>
                             </tr>          
-                            {volist name="news" id="newsItem" key="key"}
+                            {volist name="notice" id="notice" key="key"}
                             <tr>
                                 <th>{$key}</th>
-                                <th>{$newsItem.Description}</th>
-                                <th>{$newsItem.time}</th>
-                                <th>{$newsItem.author}</th>
+                                <th>{$notice.title}</th>
+                                <th>{$notice.time}</th>
+                                <th>{$notice.author}</th>
                                 <th>
-                                    <a href="{:url('edit', ['id' => $newsItem.id])}">编辑</a>
+                                    <a href="{:url('edit', ['id' => $notice.id])}">编辑</a>
                                     &nbsp;&nbsp;
-                                    <a href="{:url('delete', ['id' => $newsItem.id])}">删除</a>
+                                    <a href="{:url('delete', ['id' => $notice.id])}">删除</a>
                                 </th>
                                 <th>
                                     <form action="{:url('setTop')}" method="post" style="display:inline;">
-                                        <input type="hidden" name="id" value="{$newsItem.id}">
+                                        <input type="hidden" name="id" value="{$notice.id}">
                                         <button type="submit" class="btn btn-sm btn-secondary">置顶新闻</button>
                                     </form>
                                 </th>

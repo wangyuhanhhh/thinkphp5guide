@@ -12,6 +12,14 @@
                     <label for="Description">请输入新闻标题：</label>
                     <textarea type="text" id="Description" name="Description" rows="3" required>{$News->getData('Description')}</textarea>
                 </div>
+                <div class="form-group">
+                    <label for="author">请输入新闻作者：</label>
+                    <textarea type="text" id="author" name="author" rows="3" required>{$News->getData('author')}</textarea>
+                </div>
+                <div class="form-group">
+                    <label for="content">请输入新闻内容：</label>
+                    <textarea type="text" id="content" name="content" rows="3" required>{$News->getData('content')}</textarea>
+                </div>
                 <!-- 日期选择器 -->
                 <div class="form-group">
                     <label for="UploadDate">请选择新闻发布日期：</label>
