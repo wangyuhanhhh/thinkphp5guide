@@ -2,30 +2,23 @@
 <html>
 <head lang="zh-cn">
 	<meta charset="utf-8">
-	<title>上传图片</title>
+	<title>编辑图片</title>
 </head>
 <body class="container">
 	<!-- 上传文件一个盒子 -->
 	<div class="row">
         <div class="col-md-12">
             <!-- 上传新闻动态图片 -->
-            <form action="{:url('Photo/insert')}" method="post" enctype="multipart/form-data">
-                <!-- 选择是大轮播还是小轮播 -->
-                <div class="form-group">
-                    <label for="typeSelect">选择轮播类型</label>
-                    <select class="form-control" id="typeSelect" name="type">
-                        <option value="0">小轮播</option>
-                        <option value="1">大轮播</option>
-                    </select>
-                </div>
+            <form action="{:url('Photo/update')}" method="post" enctype="multipart/form-data">
                 <!-- 图片上传部分 -->
                 <div class="form-group">
-                    <label for="file">上传新闻动态图片：</label>
-                    <input type="file" name="file" required>
+                    <input type="hidden" name="type" value="{$photo.type}">
+                    <label for="newFile">更换图片：</label>
+                    <input type="file" name="newFile" id="newFile">
                 </div>
                 <!-- 日期选择器 -->
                 <div class="form-group">
-                    <label for="UploadDate">请选择新闻发布日期：</label>
+                    <label for="UploadDate">请选择上传日期：</label>
                     <input type="date" id="UploadDate" name="UploadDate" required>
                 </div>                  
                 <!-- 提交按钮 -->
