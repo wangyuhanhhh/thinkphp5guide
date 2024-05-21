@@ -141,7 +141,9 @@ class NewsController extends Controller
         //处理图片
         $file = request()->file('file');
         if ($file) {
-            $info = $file->move(ROOT_PATH . 'public' . DS . 'uploads' . DS . 'photo');
+            $info = $file->validate([
+                'ext' => 'jpg,jpeg,png,gif'
+                ])->move(ROOT_PATH . 'public' . DS . 'uploads' . DS . 'photo');
             if ($info) {
                 $getPath = $info->getSaveName();
                 //将\替换为/ 一个\代表转义字符，使用两个\\告诉php将其视为普通反斜杠
