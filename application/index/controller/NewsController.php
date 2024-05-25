@@ -4,7 +4,6 @@ use think\Controller;   //用于向V层进行数据的传递
 use app\common\model\News;   //新闻模型
 use think\Request;  //引用Request
 use think\Db;
-use app\common\model\Nav;
 
 /**
  * 新闻模块，继承think\Controller类后，利用V层对数据进行打包上传
@@ -131,6 +130,7 @@ class NewsController extends Controller
         // 将数据返回给用户
         return $htmls;
     }
+    
     /**
      * $getPath 表单传来的值
      * $savePath 将\替换成/的地址
@@ -158,12 +158,15 @@ class NewsController extends Controller
         $News = new News();
         // 将换行符转换为<br>标签
         $postData['content'] = nl2br($postData['content']);
+        //获取当前时间戳
+        $currentTime = time();     
         //插入信息
         $News->Description = $postData['Description'];
         $News->author = $postData['author'];
         $News->content = $postData['content'];
         $News->photo_path = $path;
         $News->time = $postData['time'];
+        $News->submitTime = $currentTime;
         //保存                
         $News->save();
         return $this->success('新增成功', url('News/upload'));
@@ -171,6 +174,7 @@ class NewsController extends Controller
 
     /**
      * 取消置顶
+     * newsId form表单传过来的newsId值
      */
     public function recallTop() {
         //接收数据
@@ -191,10 +195,10 @@ class NewsController extends Controller
             $this->error('当前新闻未置顶', url('News/upload'));
         }
     }
+
     /**
      * 置顶文件
-     * id form表单传过来的id值
-     * NewsId 置顶操作
+     * newsId form表单传过来的newsId值
      */
     public function setTop() {  
         //接收数据
@@ -217,17 +221,18 @@ class NewsController extends Controller
     }
 
     /**
-     * 接受处理edit传过来的数据
+     * 处理表单传过来的数据
      */
     public function update() {
-        //接收数据
-        $id = Request()->instance()->post('id/d');
-        
+        $id = Request::instance()->post('id/d');
         //获取当前对象
         $News = News::get($id);
         if (!is_null($News)) {
             $News->Description = Request::instance()->post('Description');
-            $News->UploadDate = Request::instance()->post('UploadDate');
+            $News->time = Request::instance()->post('time');
+            //获取当前时间戳
+            $currentTime = time();
+            $News->submitTime = $currentTime;
             //更新数据
             if (false === $News->save()) {
                 return '更新失败' . $News->getError();
@@ -243,11 +248,11 @@ class NewsController extends Controller
      */
     public function upload() {
         $News = new News();
-        $news = News::order('Sort', 'desc')->select();
-        $Nav = new Nav();
-        $navList = Nav::select();
-        // 将数据传给视图
-        $this->assign('navList', $navList);
+        //选出Sort值为1的数据
+        $sort = $News::where('Sort', '1')->order('submitTime', 'desc')->select();
+        $other = $News::where('Sort', '0')->order('submitTime', 'desc')->select(); 
+        //合并两个数组，保证Sort值为1的始终在前面
+        $news = array_merge($sort, $other);   
         $this->assign('news', $news);
         return $this->fetch();
     }
