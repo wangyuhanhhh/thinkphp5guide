@@ -138,6 +138,8 @@ class NoticeController extends Controller
         $postData = Request::instance()->post();       
         //实例化空对象
         $Notice = new Notice();
+        // 将换行符转换为<br>标签
+        $postData['content'] = nl2br($postData['content']);
         //插入信息
         $Notice->title = $postData['title'];
         $Notice->author = $postData['author'];

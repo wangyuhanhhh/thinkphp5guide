@@ -26,7 +26,10 @@
                     <div class="container">
                       <h1 class="display-4 title-Style">{$notices.title}</h1>
                       <div class="info-bar" style="margin-top: 10px; margin-bottom: 10px;"><p>发布日期：{$notices.time}&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp作者：{$notices.author}</p></div>
-                      <p class="lead">{$notices.content}</p>        
+                      <p class="lead">{$notices.content}</p>
+                      <div class="image-container" style="height: 350px; display: flex; justify-content: center; align-items: center;">
+                          <img src="{$notices.photo_path}" style="max-height: 100%; max-width: 100%;">
+                      </div>          
                     </div>
                 </div>
                 <!-- 上一条 -->
