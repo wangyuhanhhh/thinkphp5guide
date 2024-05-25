@@ -156,6 +156,8 @@ class NewsController extends Controller
         $postData = Request::instance()->post();       
         //实例化空对象
         $News = new News();
+        // 将换行符转换为<br>标签
+        $postData['content'] = nl2br($postData['content']);
         //插入信息
         $News->Description = $postData['Description'];
         $News->author = $postData['author'];
@@ -200,7 +202,7 @@ class NewsController extends Controller
         $News = News::get($id);
         if (!is_null($News)) {
             $News->Description = Request::instance()->post('Description');
-            $News->time = Request::instance()->post('time');
+            $News->UploadDate = Request::instance()->post('UploadDate');
             //更新数据
             if (false === $News->save()) {
                 return '更新失败' . $News->getError();
