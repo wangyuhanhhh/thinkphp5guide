@@ -57,6 +57,10 @@
                                         <input type="hidden" name="id" value="{$newsItem.id}">
                                         <button type="submit" class="btn btn-sm btn-secondary">置顶新闻</button>
                                     </form>
+                                    <form action="{:url('recallTop')}" method="post" style="display:inline;">
+                                        <input type="hidden" name="id" value="{$newsItem.id}">
+                                        <button type="submit" class="btn btn-sm btn-secondary">取消置顶</button>
+                                    </form>
                                 </th>
                             </tr>
                             {/volist}

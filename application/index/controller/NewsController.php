@@ -170,24 +170,49 @@ class NewsController extends Controller
     }  
 
     /**
+     * 取消置顶
+     */
+    public function recallTop() {
+        //接收数据
+        $newsId = Request()->instance()->post('id/d');
+        $News = new News();
+        //查询当前新闻的Sort值
+        $sort = $News->where(['id' => $newsId])->value('Sort');
+        if ($sort == 1) {
+            //如果为0，则将Sort值加1，置顶
+            $result = $News->where(['id' => $newsId])->setField('Sort', 0);
+            if ($result !== false) {
+                $this->success('取消置顶成功', url('News/upload'));
+            } else {
+                $this->error('取消置顶失败，请重试', url('News/upload'));
+            }
+        } else {
+            // 如果Sort已经是0，提示已置顶
+            $this->error('当前新闻未置顶', url('News/upload'));
+        }
+    }
+    /**
      * 置顶文件
      * id form表单传过来的id值
      * NewsId 置顶操作
      */
     public function setTop() {  
         //接收数据
-        $postData = Request::instance()->post();
-        $NewsId = $postData['id'];
-        if (is_null($NewsId)) {
-            return $this->error('请选择要置顶的新闻', url('upload'));
-        }
-        $News  = new News();
-        //调用M层中的top方法
-        $result = $News->top($NewsId);
-        if ($result) {
-            return $this->success('置顶成功', url('upload'));
+        $newsId = Request()->instance()->post('id/d');
+        $News = new News();
+        //查询当前新闻的Sort值
+        $sort = $News->where(['id' => $newsId])->value('Sort');
+        if ($sort == 0) {
+            //如果为0，则将Sort值加1，置顶
+            $result = $News->where(['id' => $newsId])->setField('Sort', 1);
+            if ($result !== false) {
+                $this->success('置顶成功', url('News/upload'));
+            } else {
+                $this->error('置顶失败，请重试', url('News/upload'));
+            }
         } else {
-            return $this->error('置顶失败请重试');
+            // 如果Sort已经是1，提示已置顶
+            $this->error('当前新闻已置顶', url('News/upload'));
         }
     }
 
