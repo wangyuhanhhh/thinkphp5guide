@@ -12,25 +12,25 @@
             <form action="{:url('News/insert')}" method="post" enctype="multipart/form-data">
                 <!-- 文本输入框 -->
                 <div class="form-group">
-                    <label for="Description">请输入新闻标题：</label>
-                    <textarea type="text" id="Description" name="Description" rows="3" required></textarea>
+                    <label for="Description">新闻标题：</label>
+                    <textarea type="text" id="Description" name="Description" placeholder="请输入新闻标题" rows="3" required></textarea>
                 </div>
 
                 <!-- 文本输入框 -->
                 <div class="form-group">
-                    <label for="author">请输入新闻作者：</label>
-                    <textarea type="text" id="author" name="author" rows="3" required></textarea>
+                    <label for="author">新闻作者：</label>
+                    <textarea type="text" id="author" name="author" rows="3"  placeholder="请输入新闻作者" required></textarea>
                 </div>
 
                 <!-- 文本输入框 -->
                 <div class="form-group">
-                    <label for="content">请输入新闻内容：</label>
-                    <textarea type="text" id="content" name="content" rows="3" required></textarea>
+                    <label for="content">新闻内容：</label>
+                    <textarea type="text" id="content" name="content" rows="3" placeholder="请输入新闻内容" required></textarea>
                 </div>
 
                 <!--上传图片-->
                 <div class="form-group">
-                    <label for="file">上传新闻图片：</label>
+                    <label for="file">新闻图片：</label>
                     <input type="file" id="photo_path" name="file" required>
                 </div>
     
