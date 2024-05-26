@@ -1,0 +1,30 @@
+{extend name="userIndex"}
+{block name="title"}实验室简介{/block}
+{block name="content"}
+<div class="container">
+    <div class="row">
+        <!-- 增加垂直导航栏 -->
+        <div class="col-md-2">
+            <ul class="nav flex-column col-">
+                <li class="nav-item">
+                    <a class="nav-link disabled"><h4>图书馆</h4></a>
+                </li>
+            </ul>
+        </div>
+        <div class="col-md-10">
+            <div class="row mt-3">
+                {volist name="lab" id="lab" key="key"}
+                <div class="col-md-4 mb-4">
+                    <div class="cardstyle card">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <p class="mb-0">图片位置：{$lab.title}</p>
+                        </div>
+                        <img class="card-img" src="{$lab.photo_path}">                
+                    </div>
+                </div>
+                {/volist}
+            </div>
+        </div>
+    </div>
+</div>
+{/block}
