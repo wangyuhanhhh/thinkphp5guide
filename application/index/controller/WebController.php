@@ -19,14 +19,32 @@ class WebController extends Controller
 
     public function index()
     {
-        //查询新闻快讯数据(部分)用于显示
-        $newsList = News::limit(6)->select();
+        //查询数据(部分)用于显示
         $noticeList = Notice::limit(5)->select();
         $experimentList = Experiment::limit(6)->select();
         $downloadList = Download::limit(5)->select();
         $BigPhotoList = Db::name('photo')->where('type', 1)->select();
         $SmallPhotoList = Db::name('photo')->where('type', 0)->select();
+     
+        // 从数据库中获取新闻数据
+        $topNewsList = News::where('Sort', 1)->order('time', 'desc')->select();
+        $normalNewsList = News::where('Sort', 0)->order('time', 'desc')->select();
+
+        //确保查询结果不为空
+        if($topNewsList && $normalNewsList) {
+            // 合并置顶和非置顶新闻数据
+            $newsList = array_merge($topNewsList, $normalNewsList);
+        } elseif ($topNewsList) {
+            $newsList = $topNewsList; 
+        } elseif ($normalNewsList) {
+            $newsList = $normalNewsList;
+        } else {
+            //如果两个查询都为空，直接复制为空数组
+            $newsList = [];
+        }
         
+        // 只取前6条数据
+        $newsList = array_slice($newsList, 0, 6);
 
         //将查询的内容传给V层
         $this->assign('newsList', $newsList);
