@@ -1,37 +1,39 @@
-{extend name="adminIndex"}
-{block name="title"}
-资料上传
-{/block}
-{block name="content"}
-    <!-- 图片 -->
-    <div class="" style="width: 1200px;height: 175px;">
-        <img style="height: 170px;width: 1200px;"
-        src="/thinkphp5guide/public/static/picture/9.png">
-    </div>
-
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <!-- 整合为一个表单 -->
-                <form action="{:url('Experiment/insert')}" method="post" enctype="multipart/form-data">
-                    <!-- 文本输入框 -->
-                    <div class="form-group">
-                        <label for="name">请输入实验名称：</label>
-                        <textarea type="text" id="name" name="name" rows="3" required></textarea>
-                    </div>
-                    <!-- 视频上传框 -->
-                    <div class="form-group">
-                        <input type="file" name="video" accept="video/*" />  
-                    </div>
-                    <!-- 日期选择器 -->
-                    <div class="form-group">
-                        <label for="time">请选择视频上传日期：</label>
-                        <input type="date" id="time" name="time" required>
-                    </div>
-                    <!-- 提交按钮 -->
-                    <button type="submit" class="btn btn-primary">上传</button>
-                </form>
-            </div>
+<!DOCTYPE html>
+<html lang="zh-hans">
+<head>
+    <meta charset="utf-8">
+    <title>编辑数据</title>
+    <style>
+        .must {
+            color: red;
+        }
+    </style>
+</head>
+<body class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <!-- 整合为一个表单 -->
+            <form action="{:url('Experiment/insert')}" method="post" enctype="multipart/form-data">
+                <!-- 文本输入框 -->
+                <div class="form-group">
+                    <span  class="must">*</span>
+                    <label for="name">请输入实验名称：</label>
+                    <textarea type="text" id="name" name="name" rows="3" required></textarea>
+                </div>
+                <!-- 视频上传框 -->
+                <div class="form-group">
+                    <span  class="must">*</span>
+                    <input type="file" name="video" accept="video/*" />  
+                </div>
+                <!-- 日期选择器 -->
+                <div class="form-group">
+                    <span  class="must">*</span>
+                    <label for="time">请选择视频上传日期：</label>
+                    <input type="date" id="time" name="time" required>
+                </div>
+                <!-- 提交按钮 -->
+                <button type="submit" class="btn btn-primary">上传</button>
+            </form>
         </div>
     </div>
-{/block}
+</body>

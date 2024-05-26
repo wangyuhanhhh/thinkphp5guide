@@ -3,6 +3,11 @@
 <head lang="zh-cn">
 	<meta charset="utf-8">
 	<title>上传文件</title>
+    <style>
+        .must {
+            color: red;
+        }
+    </style>
 </head>
 <body class="container">
 	<!-- 上传文件一个盒子 -->
@@ -12,30 +17,35 @@
             <form action="{:url('News/insert')}" method="post" enctype="multipart/form-data">
                 <!-- 文本输入框 -->
                 <div class="form-group">
+                    <span  class="must">*</span>
                     <label for="Description">新闻标题：</label>
                     <textarea type="text" id="Description" name="Description" placeholder="请输入新闻标题" rows="3" required></textarea>
                 </div>
 
                 <!-- 文本输入框 -->
                 <div class="form-group">
+                    <span  class="must">*</span>
                     <label for="author">新闻作者：</label>
                     <textarea type="text" id="author" name="author" rows="3"  placeholder="请输入新闻作者" required></textarea>
                 </div>
 
                 <!-- 文本输入框 -->
                 <div class="form-group">
+                    <span  class="must">*</span>
                     <label for="content">新闻内容：</label>
                     <textarea type="text" id="content" name="content" rows="3" placeholder="请输入新闻内容" required></textarea>
                 </div>
 
                 <!--上传图片-->
                 <div class="form-group">
+                    <span  class="must">*</span>
                     <label for="file">新闻图片：</label>
                     <input type="file" id="photo_path" name="file" required>
                 </div>
     
                 <!-- 日期选择器 -->
                 <div class="form-group">
+                    <span  class="must">*</span>
                     <label for="time">请选择新闻发布日期：</label>
                     <input type="date" id="time" name="time" required>
                 </div>
