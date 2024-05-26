@@ -149,29 +149,43 @@ class NewsController extends Controller
                 //将\替换为/ 一个\代表转义字符，使用两个\\告诉php将其视为普通反斜杠
                 $savePath = str_replace('\\', '/', $getPath);
                 $path = '/thinkphp5guide/public/uploads/photo/' . $savePath;
+                 //保存文字。接收传入数据
+                $postData = Request::instance()->post();       
+                //实例化空对象
+                $News = new News();
+                // 将换行符转换为<br>标签
+                $postData['content'] = nl2br($postData['content']);
+                //获取当前时间戳
+                $currentTime = time(); 
+                //将时间戳转化为'y-m-d'型   
+                $formattedDate = date('Y-m-d', $currentTime);
+                $putTime = $postData['time'];
+                //用户选择的时间
+                if ($putTime < $formattedDate) {
+                    //插入信息
+                    $News->Description = $postData['Description'];
+                    $News->author = $postData['author'];
+                    $News->content = $postData['content'];
+                    $path = '/thinkphp5guide/public/uploads/photo/' . $savePath;
+                    $News->photo_path = $path;
+                    $News->time = $postData['time'];
+                    $News->submitTime = $currentTime;
+                    if ($News->save()) {
+                        return $this->success('新增成功', url('News/upload'));
+                    } else {
+                        return $this->error('保存失败', url('News/upload'));
+                    }
+                } else {
+                        return $this->error('请选择今天或之前的时间', url('News/add'));
+                }
+            } else {
+                return $this->error('上传失败请重试', url('News/add'));
             }
-        }   
-
-        //保存文字。接收传入数据
-        $postData = Request::instance()->post();       
-        //实例化空对象
-        $News = new News();
-        // 将换行符转换为<br>标签
-        $postData['content'] = nl2br($postData['content']);
-        //获取当前时间戳
-        $currentTime = time();     
-        //插入信息
-        $News->Description = $postData['Description'];
-        $News->author = $postData['author'];
-        $News->content = $postData['content'];
-        $News->photo_path = $path;
-        $News->time = $postData['time'];
-        $News->submitTime = $currentTime;
-        //保存                
-        $News->save();
-        return $this->success('新增成功', url('News/upload'));
+        } else {
+            return $this->error('未上传文件', url('News/upload'));
+        }     
     }  
-
+    
     /**
      * 取消置顶
      * newsId form表单传过来的newsId值
@@ -249,8 +263,8 @@ class NewsController extends Controller
     public function upload() {
         $News = new News();
         //选出Sort值为1的数据
-        $sort = $News::where('Sort', '1')->order('submitTime', 'desc')->select();
-        $other = $News::where('Sort', '0')->order('submitTime', 'desc')->select(); 
+        $sort = $News::where('Sort', '1')->order('time', 'desc')->select();
+        $other = $News::where('Sort', '0')->order('time', 'desc')->select(); 
         //合并两个数组，保证Sort值为1的始终在前面
         $news = array_merge($sort, $other);   
         $this->assign('news', $news);
