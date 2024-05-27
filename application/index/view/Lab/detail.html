@@ -33,7 +33,7 @@
                 <div id="lab-footer">
                     {if condition="$prevId"}
                     <!-- 如果有下一个新闻，生成链接 -->
-                    <a href="{:url('lab/detail', ['id' => $prevId])}"><<上一条:  {$labList[$prevIndex]['Description']}</a>
+                    <a href="{:url('lab/detail', ['id' => $prevId])}"><<上一条:  {$labList[$prevIndex]['title']}</a>
                     {else}
                     <!-- 如果没有上一个新闻，显示提示 -->
                     <h3>已经是最新新闻了！</h3>
@@ -43,7 +43,7 @@
                 <div id="lab-footer">
                     {if condition="$nextId"}
                     <!-- 如果有下一个新闻，生成链接 -->
-                    <a href="{:url('lab/detail', ['id' => $nextId])}">>>下一条新闻:  {$labList[$nextIndex]['Description']}</a>
+                    <a href="{:url('lab/detail', ['id' => $nextId])}">>>下一条新闻:  {$labList[$nextIndex]['title']}</a>
                     {else}
                     <!-- 如果没有下一个新闻，显示提示 -->
                     <h3>没有更多新闻了！</h3>
