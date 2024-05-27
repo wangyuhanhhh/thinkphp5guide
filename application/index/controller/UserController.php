@@ -67,9 +67,11 @@ class UserController extends Controller {
     public function index() {
         //判断用户登录状态
         if(User::checkLoginStatus()) {
-            //已登录
+            //已登录,同时启用分页
+            $pageSize = 5;
             $User = new User();
-            $users = $User->select();
+            $users = $User->paginate($pageSize);
+
             //向V层传递数据
             $this->assign('users', $users);
             return $this->fetch();
