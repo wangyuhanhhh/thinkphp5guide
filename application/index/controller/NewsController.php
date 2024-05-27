@@ -2,8 +2,10 @@
 namespace app\index\controller; //指出该文件的位置
 use think\Controller;   //用于向V层进行数据的传递
 use app\common\model\News;   //新闻模型
+use app\common\model\User;  //User模型，判断登陆状态
 use think\Request;  //引用Request
 use think\Db;
+
 
 /**
  * 新闻模块，继承think\Controller类后，利用V层对数据进行打包上传
@@ -12,7 +14,15 @@ class NewsController extends Controller
 {
     public function add()
     {
-        return $this->fetch();
+        //判断登陆状态
+        if(User::checkLoginStatus()) {
+            //已登陆
+            return $this->fetch();
+        } else {
+            //未登陆
+            $this->redirect('Login/loginForm');
+        }
+        
     }
 
     /**
@@ -100,7 +110,10 @@ class NewsController extends Controller
      * 读取数据
      */
     public function edit() {
-        //获取传入id
+
+        //判断登陆状态
+        if(User::checkLoginStatus()) {
+            //获取传入id
         $id = Request::instance()->param('id/d');
         
         //在表模型中获取当前记录
@@ -112,6 +125,11 @@ class NewsController extends Controller
         $this->assign('News', $News);
         //获取封装好的V层内容并返回给客户
         return $this->fetch();
+        } else {
+            //未登录，定向到登陆页面
+            $this->redirect('Login/loginForm');
+        }
+        
     }
 
     public function index()
@@ -128,7 +146,7 @@ class NewsController extends Controller
         $htmls = $this->fetch();
 
         // 将数据返回给用户
-        return $htmls;
+        return $htmls;   
     }
     
     /**
@@ -261,13 +279,22 @@ class NewsController extends Controller
      * 管理端上传文件列表
      */
     public function upload() {
-        $News = new News();
-        //选出Sort值为1的数据
-        $sort = $News::where('Sort', '1')->order('time', 'desc')->select();
-        $other = $News::where('Sort', '0')->order('time', 'desc')->select(); 
-        //合并两个数组，保证Sort值为1的始终在前面
-        $news = array_merge($sort, $other);   
-        $this->assign('news', $news);
-        return $this->fetch();
+
+        //判断用户登陆状态
+        if(User::checkLoginStatus()) {
+            //已登陆
+            $News = new News();
+            //选出Sort值为1的数据
+            $sort = $News::where('Sort', '1')->order('time', 'desc')->select();
+            $other = $News::where('Sort', '0')->order('time', 'desc')->select(); 
+            //合并两个数组，保证Sort值为1的始终在前面
+            $news = array_merge($sort, $other);   
+            $this->assign('news', $news);
+            return $this->fetch();
+        } else {
+             //未登陆
+             $this->redirect('Login/loginForm');
+        }
+        
     }
 }

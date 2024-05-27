@@ -4,13 +4,23 @@ namespace app\index\controller;
 use think\Controller;
 use think\Request;
 use app\common\model\Experiment;
+use app\common\model\User;
 use think\Db;
 
 class ExperimentController extends Controller
 {
     public function add()
     {
-        return $this->fetch();
+        //判断用户登录状态
+        if(User::checkLoginStatus()) {
+            //已登录
+            return $this->fetch();
+        } else {
+            //未登录
+            $this->redirect('Login/loginForm');
+        }
+       
+        
     }
 
     /**
@@ -118,13 +128,19 @@ class ExperimentController extends Controller
      */
     public function upload()
     {
-        //查询资料数据并分页
-        $pageSize = 5;
-        $Experiment = new Experiment;
-        $experiments = $Experiment->paginate($pageSize);
+        //判断用户登录状态
+        if(User::checkLoginStatus()) {
+            //已登录，查询资料数据并分页
+            $pageSize = 5;
+            $Experiment = new Experiment;
+            $experiments = $Experiment->paginate($pageSize);
 
-        //向v层传数据
-        return $this->fetch('upload', ['experiments' => $experiments]);
+            //向v层传数据
+            return $this->fetch('upload', ['experiments' => $experiments]);
+        } else {
+            //未登录
+            $this->redirect('Login/loginForm');
+        }        
     }
 
     public function detail($id)

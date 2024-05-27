@@ -3,6 +3,7 @@ namespace app\index\controller;
 use think\Request;
 use think\Controller;
 use app\common\model\Download;
+use app\common\model\User;
 use think\Db;
 use think\facade\Env; 
 
@@ -13,7 +14,14 @@ class DownloadController extends Controller
      */
     public function add()
     {
-        return $this->fetch();
+        //判断登录状态
+        if(User::checkLoginStatus()) {
+            //已登录
+            return $this->fetch();
+        } else {
+            //未登录
+            $this->redirect('Login/loginForm');
+        }    
     }
 
     /**
@@ -130,12 +138,18 @@ class DownloadController extends Controller
      */
     public function upload() 
     {
-        //查询资料数据并分页
-        $pageSize = 5;
-        $Download = new Download;
-        $downloads = $Download->paginate($pageSize);
+        //判断用户登录状态
+        if(User::checkLoginStatus()) {
+            //已登录，查询资料数据并分页
+            $pageSize = 5;
+            $Download = new Download;
+            $downloads = $Download->paginate($pageSize);
 
-        //向v层传数据
-        return $this->fetch('upload', ['downloads' => $downloads]);
+            //向v层传数据
+            return $this->fetch('upload', ['downloads' => $downloads]);
+        } else {
+            //未登录
+            $this->redirect('Login/loginForm');
+        }     
     }
 }
