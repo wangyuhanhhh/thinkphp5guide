@@ -21,6 +21,7 @@
                 <div class="jumbotron jumbotron-fluid">
                     <div class="container">
                       <h1 class="display-4">资料目录</h1>
+                      <p class="lead">点击下载</p>
                       <ul class="list-unstyled">
                         {volist name="downloads" id="download"}
                         <li class="news-item"><a href="<?php echo $download->saveName; ?>" class="bullet-text" download>{$download->getData('name')}</a></li>

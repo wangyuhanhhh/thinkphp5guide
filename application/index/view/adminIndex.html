@@ -23,6 +23,11 @@
         .breadcrumb-right {
             text-align: right;
         }
+
+        /* 设置置顶新闻行的样式：用于管理端的新闻快讯置顶与微置顶的区分 */
+        .top-news {
+            background-color: #dcaee7; /* 设置背景色为淡紫色 */
+        }
     </style>
 </head>
 <body class="container">
@@ -63,10 +68,6 @@
                         <a class="nav-link" href="{:url('User/index')}">用户管理</a>
                     </li>
                 </ul>
-                <form class="form-inline my-2 my-lg-0">
-                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-                </form>
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
                         <a href="{:url('Login/logOut')}" class="btn btn-outline-danger">注销</a>

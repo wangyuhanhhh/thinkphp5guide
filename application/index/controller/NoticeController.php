@@ -165,22 +165,6 @@ class NoticeController extends Controller
         $Notice->save();
         return $this->success('新增成功', url('Notice/upload'));
     }
-    
-    public function setTop() {
-        $postData = Request::instance()->post();
-        $NoticeId = $postData['id'];
-        if (is_null($NoticeId)) {
-            return $this->error('请选择要置顶的新闻', url('upload'));
-        }
-        $Notice  = new Notice();
-        //调用M层中的top方法
-        $result = $Notice->top($NoticeId);
-        if ($result) {
-            return $this->success('置顶成功', url('upload'));
-        } else {
-            return $this->error('置顶失败请重试');
-        }
-    }
 
     public function update() {
         //接收数据

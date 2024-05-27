@@ -39,7 +39,6 @@
                                 <th>通知时间</th>
                                 <th>作者</th>
                                 <th>操作</th>
-                                <th>置顶</th>
                             </tr>          
                             {volist name="notice" id="notice" key="key"}
                             <tr>
@@ -51,12 +50,6 @@
                                     <a href="{:url('edit', ['id' => $notice.id])}">编辑</a>
                                     &nbsp;&nbsp;
                                     <a href="{:url('delete', ['id' => $notice.id])}">删除</a>
-                                </th>
-                                <th>
-                                    <form action="{:url('setTop')}" method="post" style="display:inline;">
-                                        <input type="hidden" name="id" value="{$notice.id}">
-                                        <button type="submit" class="btn btn-sm btn-secondary">置顶新闻</button>
-                                    </form>
                                 </th>
                             </tr>
                             {/volist}
