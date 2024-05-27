@@ -1,0 +1,58 @@
+{extend name="detail"}
+{block name="title"}实验室简介{/block}
+{block name="content"}
+    <div class="container">
+        <div class="row">
+            <!-- 增加垂直导航栏 -->
+            <div class="col-md-2">
+                <ul class="nav flex-column col-">
+                    <li class="nav-item">
+                        <a class="nav-link disabled"><h4>实验室简介</h4></a>
+                    </li>
+                    <li class="nav-item">
+                         <a class="nav-link" href="{:url('Lab/index')}"><h4>图书馆</h4></a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-md-10">
+                <div class="breadcrumb">
+                    <h2 class="inline-header breadcrumb-right">实验室简介</h2>
+                    <span class="inline-span"><a href="{:url('Web/index')}">网站首页</a></span>
+                </div>
+                <div class="jumbotron jumbotron-fluid" style="background-color: rgb(248, 243, 237);">
+                    <div class="container">                      
+                        <h2 class="display-4 title-Style">{$lab.title}</h2>
+                        <div class="info-bar" style="margin-top: 10px; margin-bottom: 10px;"><p>发布日期：{$lab.time}&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp作者：{$lab.author}</p></div>              
+                        <p class="lead">{$lab.content}</p>
+                        <div class="image-container" style="height: 350px; display: flex; justify-content: center; align-items: center;">
+                            <img src="{$lab.photo_path}" style="max-height: 100%; max-width: 100%;">
+                        </div>                               
+                    </div>
+                </div>
+                <!-- 上一条 -->
+                <div id="lab-footer">
+                    {if condition="$prevId"}
+                    <!-- 如果有下一个新闻，生成链接 -->
+                    <a href="{:url('lab/detail', ['id' => $prevId])}"><<上一条:  {$labList[$prevIndex]['Description']}</a>
+                    {else}
+                    <!-- 如果没有上一个新闻，显示提示 -->
+                    <h3>已经是最新新闻了！</h3>
+                    {/if}
+                </div>
+                <!-- 下一条 -->
+                <div id="lab-footer">
+                    {if condition="$nextId"}
+                    <!-- 如果有下一个新闻，生成链接 -->
+                    <a href="{:url('lab/detail', ['id' => $nextId])}">>>下一条新闻:  {$labList[$nextIndex]['Description']}</a>
+                    {else}
+                    <!-- 如果没有下一个新闻，显示提示 -->
+                    <h3>没有更多新闻了！</h3>
+                    {/if}
+                </div>
+            </div>
+        </div>
+    </div> 
+    <div class="purple-box"></div>
+    <script src="/thinkphp5guide/public/static/bootstrap-4.6.2-dist/jquery-3.5.1.slim.min.js"  crossorigin="anonymous"></script>
+    <script src="/thinkphp5guide/public/static/bootstrap-4.6.2-dist/bootstrap-4.6.2.bundle.min.js" crossorigin="anonymous"></script>  
+{/block}

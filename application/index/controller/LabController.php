@@ -30,6 +30,60 @@ class LabController extends Controller {
         return $this->success('删除成功', url('upload'));
     }
 
+    public function detail($id) {
+        $id = Request::instance()->param('id/d');
+        //根据id从数据库中检索简介数据
+        $lab = Lab::get($id);
+        
+        //获取简介列表(desc降序排列;asc升序排列)
+        $labList = Lab::order('id', 'asc')->select(); 
+       
+        // 找出当前简介在列表中的位置($currentPosition是键值) 
+        $currentPosition = array_search($lab, $labList, true);
+       
+        //如果没有找到(可能是因为列表不完整或当前简介不在列表中)，则默认为第一条
+        if ($currentPosition === false) {
+            $nextId = $labList[0]['id'];
+        } else {
+            //获取下一条简介的键值(注意检查边界条件)
+            $nextIndex = $currentPosition + 1;
+
+            //获取上一条简介的键值
+            $prevIndex = $currentPosition - 1;
+
+            if($prevIndex >= 0) {
+                $prevId = $labList[$prevIndex]['id'];
+            } else {
+                //如果已经是第一条简介了，设置默认
+                $prevId = null;
+            }
+            
+            if (isset($labList[$nextIndex])) {
+                $nextId = $labList[$nextIndex]['id'];
+            } else {
+                //如果没有下一个简介，设置默认提示
+                $nextId = null;
+            }
+        }
+        
+        //传数据到模版
+        $this->assign('lab', $lab);
+        $this->assign('nextIndex', $nextIndex);
+        $this->assign('prevIndex', $prevIndex);
+        $this->assign('prevId', $prevId);
+        $this->assign('nextId', $nextId);
+        $this->assign('labList', $labList);
+
+        if(!$lab) {
+            //如果找不到简介，抛出异常
+            $this->error('简介不存在');
+        }
+
+        //将简介数据传给V层，同时渲染出模版
+        return $this->fetch();
+
+    }
+    
     public function edit() {
         //获取传入id
         $id = Request::instance()->param('id/d');
