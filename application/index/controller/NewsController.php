@@ -238,23 +238,42 @@ class NewsController extends Controller
      * 处理表单传过来的数据
      */
     public function update() {
+        // 接收数据
         $id = Request::instance()->post('id/d');
-        //获取当前对象
-        $News = News::get($id);
-        if (!is_null($News)) {
-            $News->Description = Request::instance()->post('Description');
-            $News->time = Request::instance()->post('time');
-            //获取当前时间戳
-            $currentTime = time();
-            $News->submitTime = $currentTime;
-            //更新数据
-            if (false === $News->save()) {
-                return '更新失败' . $News->getError();
-            } 
-        } else {
-            throw new \Exception("所更新的记录不存在", 1);
+        $file = request()->file('file');
+        // 获取当前对象
+        $news = News::get($id);
+        if (is_null($news)) {
+            return $this->error('所更新的记录不存在', url('Photo/index'));
         }
-        return $this->success('编辑成功', url('upload'));
+        // 文件上传
+        if ($file) {
+            $validate = [
+                'ext' => 'jpg,jpeg,png,gif'
+            ];
+            $info = $file->validate($validate)->move(ROOT_PATH . 'public' . DS . 'uploads' . DS . 'photo');
+            if ($info) {
+                $getPath = $info->getSaveName();
+                //将\替换为/ 一个\代表转义字符，使用两个\\告诉php将其视为普通反斜杠
+                $savePath = str_replace('\\', '/', $getPath);
+                $path = '/thinkphp5guide/public/uploads/photo/' . $savePath;        
+                // 更新
+                $news->photo_path = $path;
+                $news->Description = Request::instance()->post('Description');
+                $news->author = Request::instance()->post('author');
+                $news->content = Request::instance()->post('content');
+                $news->time = Request::instance()->post('time');
+                //获取当前时间戳
+                $currentTime = time();
+                $news->submitTime = $currentTime;
+                //更新数据
+                if ($news->save()) {
+                    return $this->success('编辑成功', url('upload'));
+                } 
+            } else {
+                throw new \Exception("所更新的记录不存在", 1);
+            }
+        }
     }
 
     /**
