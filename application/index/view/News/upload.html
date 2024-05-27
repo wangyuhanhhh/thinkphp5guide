@@ -42,7 +42,7 @@
                                 <th>置顶</th>
                             </tr>          
                             {volist name="news" id="newsItem" key="key"}
-                            <tr>
+                            <tr class="{if $newsItem.Sort eq 1}top-news{else}normal-news{/if}">
                                 <th>{$key}</th>
                                 <th>{$newsItem.Description}</th>
                                 <th>{$newsItem.time}</th>
@@ -81,7 +81,7 @@
                             </ul>
                         </nav>
                     </div>  
-                 </div>
+                </div>
             </div>  
         </div> 
     </div>

@@ -24,8 +24,6 @@
                 </div>
                 <div class="jumbotron jumbotron-fluid">
                     <div class="container">
-                      <a href="#"><h1 class="display-4">重要新闻</h1></a>
-                      <p class="lead">This is a modified jumbotron that occupies the entire horizontal space of its parent.</p>
                       <ul class="list-unstyled">
                         {volist name="newses" id="news"}
                         <li class="news-item"><a href="{:url('news/detail', ['id' => $news['id']])}" class="bullet-text">{$news->getData('Description')}</a></li>
