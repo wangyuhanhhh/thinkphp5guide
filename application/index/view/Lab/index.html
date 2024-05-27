@@ -19,7 +19,10 @@
                         <div class="card-header d-flex justify-content-between align-items-center">
                             <p class="mb-0">图片位置：{$lab.title}</p>
                         </div>
-                        <img class="card-img" src="{$lab.photo_path}">                
+                        <?php $url = "http://127.0.0.1/thinkphp5guide/public/index/lab/detail/id/" . $lab->id; ?>
+                        <a href="<?php echo $url; ?>">
+                            <img class="card-img" src="{$lab.photo_path}"> 
+                        </a>                                      
                     </div>
                 </div>
                 {/volist}
