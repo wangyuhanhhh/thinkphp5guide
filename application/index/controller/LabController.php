@@ -3,6 +3,7 @@ namespace app\index\controller;
 use think\Controller;
 use think\Request;
 use app\common\model\Lab;
+use think\Db;
 
 class LabController extends Controller {
     public function add() {
@@ -31,16 +32,30 @@ class LabController extends Controller {
     }
 
     public function detail($id) {
-        $id = Request::instance()->param('id/d');
-        //根据id从数据库中检索简介数据
-        $lab = Lab::get($id);
         
+        //根据id从数据库中检索简介数据
+        $lab = Db::name('lab')->find($id);
+      
         //获取简介列表(desc降序排列;asc升序排列)
-        $labList = Lab::order('id', 'asc')->select(); 
-       
-        // 找出当前简介在列表中的位置($currentPosition是键值) 
-        $currentPosition = array_search($lab, $labList, true);
-       
+        $labList = Lab::order('id', 'asc')->select();
+        
+        // 初始化当前位置变量
+        $currentPosition = false;
+
+        // 初始化上一条和下一条简介的ID
+        $prevId = null;
+        $nextId = null;
+        $prevIndex = 0;
+        $nextIndex = 0;
+    
+       // 找出当前简介在列表中的位置
+        foreach ($labList as $key => $item) {
+            if ($item['id'] == $id) {
+                $currentPosition = $key;
+                break;
+            }
+        }
+
         //如果没有找到(可能是因为列表不完整或当前简介不在列表中)，则默认为第一条
         if ($currentPosition === false) {
             $nextId = $labList[0]['id'];
@@ -65,7 +80,7 @@ class LabController extends Controller {
                 $nextId = null;
             }
         }
-        
+
         //传数据到模版
         $this->assign('lab', $lab);
         $this->assign('nextIndex', $nextIndex);
