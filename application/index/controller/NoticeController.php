@@ -3,13 +3,21 @@ namespace app\index\controller;
 
 use think\Controller;
 use app\common\model\Notice;
+use app\common\model\User;  //引入User模型，用于判断用户登陆状态
 use think\Request;
 use think\Db;
 
 class NoticeController extends Controller
 {
     public function add() {
-        return $this->fetch();
+        //判断登陆状态
+        if(User::checkLoginStatus()) {
+            //已登陆
+            return $this->fetch();
+        } else {
+            //未登录
+            $this->redirect('Login/loginForm');
+        }      
     }
 
     public function index()
@@ -106,18 +114,25 @@ class NoticeController extends Controller
         return $this->success('删除成功', url('upload'));
     }
     public function edit() {
-        //获取传入id
-        $id = Request::instance()->param('id/d');
-        
-        //在表模型中获取当前记录
-        if (is_null( $Notice = Notice::get($id))) {
-            return '未找到ID为' . $id . '的记录';
-        }
+        //判断登陆状态
+        if(User::checkLoginStatus()) {
+            //获取传入id
+            $id = Request::instance()->param('id/d');
+            
+            //在表模型中获取当前记录
+            if (is_null( $Notice = Notice::get($id))) {
+                return '未找到ID为' . $id . '的记录';
+            }
 
-        //将数据传给V层
-        $this->assign('Notice', $Notice);
-        //获取封装好的V层内容并返回给客户
-        return $this->fetch();
+            //将数据传给V层
+            $this->assign('Notice', $Notice);
+            //获取封装好的V层内容并返回给客户
+            return $this->fetch();
+            } else {
+            //未登录
+            $this->redirect('Login/loginForm');
+        }
+       
     }
     public function insert() {
         //处理图片
@@ -187,31 +202,38 @@ class NoticeController extends Controller
     }
 
     public function upload() {
-        $pageSize = 5;
-        $Notice = new Notice();
-        // 获取Sort值为1的数据，并按time倒序排序
-        $sort = $Notice::where('Sort', 1)->order('time', 'desc')->select();
-        // 获取Sort值为0的数据，并按time倒序排序
-        $other = $Notice::where('Sort', 0)->order('time', 'desc')->select();
-        // 合并两个数组，保证Sort值为1的始终在前面
-        $mergedNotice = array_merge($sort, $other);
-        // 计算总页数
-        $totalRows = count($mergedNotice);
-        //ceil 向上取整
-        $totalPages = ceil($totalRows / $pageSize);
-        //从get请求中获取当前页码。如果没有page参数，默认使用1
-        $currentPage = input('get.page/d', 1);
-        //计算页码偏移量
-        $offset = ($currentPage - 1) * $pageSize;
-        //array_slice 截取当前页的数据
-        $pagedNotice = array_slice($mergedNotice, $offset, $pageSize);
-        // 将分页信息传递到视图
-        $this->assign('notice', $pagedNotice);
-        $this->assign('totalPages', $totalPages);
-        $this->assign('currentPage', $currentPage);
-        // 模拟上一页、下一页的url      
-        $this->assign('prevPageUrl', ($currentPage > 1) ? "?page=".($currentPage-1) : '');
-        $this->assign('nextPageUrl', ($currentPage < $totalPages) ? "?page=".($currentPage+1) : '');
-        return $this->fetch();
+        //判断登陆状态
+        if(User::checkLoginStatus()) {
+            $Notice = new Notice();
+            $pageSize = 5;
+            $Notice = new Notice();
+            // 获取Sort值为1的数据，并按time倒序排序
+            $sort = $Notice::where('Sort', 1)->order('time', 'desc')->select();
+            // 获取Sort值为0的数据，并按time倒序排序
+            $other = $Notice::where('Sort', 0)->order('time', 'desc')->select();
+            // 合并两个数组，保证Sort值为1的始终在前面
+            $mergedNotice = array_merge($sort, $other);
+            // 计算总页数
+            $totalRows = count($mergedNotice);
+            //ceil 向上取整
+            $totalPages = ceil($totalRows / $pageSize);
+            //从get请求中获取当前页码。如果没有page参数，默认使用1
+            $currentPage = input('get.page/d', 1);
+            //计算页码偏移量
+            $offset = ($currentPage - 1) * $pageSize;
+            //array_slice 截取当前页的数据
+            $pagedNotice = array_slice($mergedNotice, $offset, $pageSize);
+            // 将分页信息传递到视图
+            $this->assign('notice', $pagedNotice);
+            $this->assign('totalPages', $totalPages);
+            $this->assign('currentPage', $currentPage);
+            // 模拟上一页、下一页的url      
+            $this->assign('prevPageUrl', ($currentPage > 1) ? "?page=".($currentPage-1) : '');
+            $this->assign('nextPageUrl', ($currentPage < $totalPages) ? "?page=".($currentPage+1) : '');
+            return $this->fetch();
+        } else {
+            //未登陆
+            $this->redirect('Login/loginForm');
+        }       
     }
 }

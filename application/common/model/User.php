@@ -17,6 +17,14 @@ class User extends Model {
     }
 
     /**
+     * 验证session是否存在
+     * @return ture,若存在
+     */
+    static public function checkLoginStatus() {
+        return session('?userId');
+    }
+
+    /**
      * 用户登录
      * @param string $username 用户名
      * @param string $password 密码
@@ -44,5 +52,11 @@ class User extends Model {
         //销毁session中数据
         session('userId', null);
         return true;
+    }
+
+     static public function auth() {
+        if (is_null(session('userId'))) {
+           header('Location:Login\loginFrom');
+        }
     }
 }

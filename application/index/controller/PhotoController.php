@@ -4,10 +4,20 @@ use think\Controller;
 use think\Db;
 use think\Request;
 use app\common\model\Photo;
+use app\common\model\User;  //引入User模型，判断登录状态
+
 class PhotoController extends Controller{
     public function add() {
-        //增加按钮增加页面
-        return $this->fetch();
+        //判断登录状态
+        if(User::checkLoginStatus()) {
+            //已登录，增加按钮增加页面
+            return $this->fetch();
+        } else {
+            //未登录
+            $this->redirect('Login/loginForm');
+        }
+        
+        
     }
     
     public function delete() {
@@ -33,27 +43,45 @@ class PhotoController extends Controller{
 
     //对应编辑表单
     public function edit($id) {
-        $id = Request::instance()->param('id/d');
+        //判断登录状态
+        if(User::checkLoginStatus()) {
+            //已登录
+            $id = Request::instance()->param('id/d');
 
-        if ($id <= 0) {
-           return $this->error('无效的图片ID');
+            if ($id <= 0) {
+            return $this->error('无效的图片ID');
+            }
+            // 根据$id获取单个图片记录
+            $Photo = new Photo();
+            $photo = $Photo->find($id); // find() 用于根据主键查找单条记录
+            // 检查图片是否存在
+            if (!$photo) {
+                $this->error('图片未找到');
+            }
+            $this->assign('photo', $photo);
+            return $this->fetch();
+        } else {
+            //未登录
+            $this->redirect('Login/loginForm');
         }
-        // 根据$id获取单个图片记录
-        $Photo = new Photo();
-        $photo = $Photo->find($id); // find() 用于根据主键查找单条记录
-        // 检查图片是否存在
-        if (!$photo) {
-            $this->error('图片未找到');
-        }
-        $this->assign('photo', $photo);
-        return $this->fetch();
+        
+        
     }
     public function index() {
-        $Photo = new Photo();
-        //photos与{volist name="photos"}对应
-        $photo = $Photo->select();
-        $this->assign('photos', $photo);
-        return $this->fetch();
+        //判断用户登录状态
+        if(User::checkLoginStatus()) {
+            //已登录
+            $Photo = new Photo();
+            //photos与{volist name="photos"}对应
+            $photo = $Photo->select();
+            $this->assign('photos', $photo);
+            return $this->fetch();
+        } else {
+            //未登录
+            $this->redirect('Login/loginForm');
+        }
+        
+        
     }
     
     /**

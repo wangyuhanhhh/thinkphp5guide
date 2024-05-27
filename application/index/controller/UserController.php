@@ -8,7 +8,16 @@ class UserController extends Controller {
      * 用户添加表单
      */
     public function add() {
-        return $this->fetch();
+        //判断用户登录状态
+        if(User::checkLoginStatus()) {
+            //已登录
+            return $this->fetch();
+        } else {
+            //未登录
+            $this->redirect('Login/loginForm');
+        }
+        
+        
     }
     
     //删除
@@ -34,26 +43,40 @@ class UserController extends Controller {
 
     //读取数据
     public function edit() {
-        //获取id
-        $id = Request::instance()->post('id/d');
-        //查找是否存在id为多少的用户
-        if (is_null( $User = User::get($id))) {
-            return '未找到ID为' . $id . '的记录';
+        //判断用户登录状态
+        if(User::checkLoginStatus()) {
+            //已登录，获取id
+            $id = Request::instance()->post('id/d');
+            //查找是否存在id为多少的用户
+            if (is_null( $User = User::get($id))) {
+                return '未找到ID为' . $id . '的记录';
+            }
+            //将数据传给V层
+            $this->assign('User', $User);
+            //获取封装好的V层内容并返回给客户
+            return $this->fetch();
+        } else {
+            //未登录
+            $this->redirect('Login/loginForm');
         }
-        //将数据传给V层
-        $this->assign('User', $User);
-        //获取封装好的V层内容并返回给客户
-        return $this->fetch();
+        
     }
     /**
      * 用户中心
      */
     public function index() {
-        $User = new User();
-        $users = $User->select();
-        //向V层传递数据
-        $this->assign('users', $users);
-        return $this->fetch();
+        //判断用户登录状态
+        if(User::checkLoginStatus()) {
+            //已登录
+            $User = new User();
+            $users = $User->select();
+            //向V层传递数据
+            $this->assign('users', $users);
+            return $this->fetch();
+        } else {
+            //未登录
+            $this->redirect('Login/loginForm');
+        }
     }
     /**
      * 处理添加的数据
