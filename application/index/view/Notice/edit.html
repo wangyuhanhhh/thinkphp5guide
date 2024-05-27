@@ -12,7 +12,7 @@
 <body class="container">
     <div class="row">
         <div class="col-md-12">
-            <form action="{:url('update')}" method="post">
+            <form action="{:url('update')}" method="post" enctype="multipart/form-data">
                 <div class="form-group">
                     <span  class="must">*</span>
                     <label for="title">请输入通知标题：</label>
@@ -27,6 +27,12 @@
                     <span  class="must">*</span>
                     <label for="content">请输入通知内容：</label>
                     <textarea type="text" id="content" name="content" rows="3" required>{$Notice->getData('content')}</textarea>
+                </div>
+                <!--上传图片-->
+                <div class="form-group">
+                    <span  class="must">*</span>
+                    <label for="file">选择图片：</label>
+                    <input type="file" id="photo_path" name="file" required>
                 </div>
                 <!-- 日期选择器 -->
                 <div class="form-group">

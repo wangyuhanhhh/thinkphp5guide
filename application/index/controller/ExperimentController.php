@@ -71,15 +71,16 @@ class ExperimentController extends Controller
      */
     public function insert()
     {
-        $file = request()->file('video');
-        
+        $file = request()->file('file');
+       
         if ($file) 
         {
-            //移动到public下的videos目录下
-            $info = $file->move(ROOT_PATH . 'public' . DS . 'videos');
+            $info = $file->move(ROOT_PATH . 'public' . DS . 'uploads');
             
             if ($info) 
             {
+                $postData = Request::instance()->post();
+
                 //获取资料名称
                 $name = $info->getInfo('name');
             
@@ -87,39 +88,37 @@ class ExperimentController extends Controller
                 $time = request()->post('time');
                 
                 //生成url路径
-                $url = '/thinkphp5guide/public/videos/' . $info->getSaveName();
+                $url = '/thinkphp5guide/public/uploads/' . $info->getSaveName();
                 
                 // 获取文件扩展名
-                $fileExtension = $info->getExtension();  
-                $experiment = new Experiment();
-                $data = [
-                    'name' => $name,
-                    'path' => $info->getPathname(),
-                    'saveName' => $url,
-                    'time' => $time,
-                ];
+                $fileExtension = $info->getExtension();
 
-                //如果以上数据成功保存到数据库中，$saveResult的值为1；反之，为0
-                $saveResult = $experiment->save($data);
-                
-                if ($saveResult) 
-                {
-                    // 保存成功
-                    $this->success('视频上传成功！', 'Experiment/upload');
-                } else 
-                {
-                    // 保存失败
-                    return '视频上传失败，保存数据库时出错！';
+                //获取当前时间戳
+                $currentTime = time(); 
+
+                //将时间戳转化为'y-m-d'型   
+                $formattedDate = date('Y-m-d', $currentTime);
+                $putTime = $postData['time'];
+                //用户选择的时间
+                if ($putTime <= $formattedDate) {
+                    $experiment = new Experiment();
+                    $data = [
+                        'name' => $name,
+                        'path' => $info->getPathname(),
+                        'saveName' => $url,
+                        'time' => $time,
+                    ];
+                    if ($experiment->save($data)) {
+                        return $this->success('新增成功', url('Experiment/upload'));
+                    } 
+                } else {
+                    return $this->error('请选择今天及今天之前的时间', url('Experiment/add'));
                 }
-            } else 
-            {
-                // 文件移动失败，输出错误信息
-                return '视频移动失败';
+            } else {
+                return $this->error('资料获取失败', url('Experiment/upload'));
             }
-        } else 
-        {
-            // 没有上传文件
-            return '没有视频被上传！';
+        } else {
+            return $this->error('没有文件被上传', url('Experiment/upload'));
         }
     }
 

@@ -103,20 +103,31 @@ class PhotoController extends Controller{
                 //将\替换为/ 一个\代表转义字符，使用两个\\告诉php将其视为普通反斜杠
                 $savePath = str_replace('\\', '/', $getPath);
                 $path = '/thinkphp5guide/public/uploads/photo/' . $savePath;
-                $uploadDate = request()->post('UploadDate');
-                $photo = new photo();
-                $data['UploadDate'] = $uploadDate;
-                $data['path'] = $path;
-                $data['type'] = $type;
-                $photo->save($data);
-                return $this->success('成功上传图片', url('Photo/index'));
+                $postData = Request::instance()->post();
+                //获取当前时间戳
+                $currentTime = time(); 
+                //将时间戳转化为'y-m-d'型   
+                $formattedDate = date('Y-m-d', $currentTime);
+                $putTime = $postData['UploadDate'];
+                //用户选择的时间
+                if ($putTime <= $formattedDate) {
+                    $uploadDate = request()->post('UploadDate');
+                    $photo = new photo();
+                    $data['UploadDate'] = $uploadDate;
+                    $data['path'] = $path;
+                    $data['type'] = $type;
+                    if($photo->save($data)) {
+                        return $this->success('成功上传图片', url('Photo/index'));
+                    }
+                } else {
+                    return $this->error('请选择今天或之前的时间', url('Photo/add'));
+                }               
             } else {
                 return $this->error('新增失败', url('Photo/index'));
             }
-        }
-        else {
+        }  else {
             return $this->error('未选择图片', url('Photo/add'));
-        }
+        }   
     }
 
     //处理编辑表单传过来的信息
@@ -141,17 +152,29 @@ class PhotoController extends Controller{
                 $getPath = $info->getSaveName();
                 //将\替换为/ 一个\代表转义字符，使用两个\\告诉php将其视为普通反斜杠
                 $savePath = str_replace('\\', '/', $getPath);
-                $path = '/thinkphp5guide/public/uploads/photo/' . $savePath;        
-                // 更新
-                $updateData = [
-                    'UploadDate' => Request::instance()->post('UploadDate'),
-                    'path' => $path,
-                ];               
-                // 保存
-                if ($photo->save($updateData)) {
-                    return $this->success('更新成功', url('Photo/index'));
+                $path = '/thinkphp5guide/public/uploads/photo/' . $savePath;
+                //保存文字。接收传入数据
+                $postData = Request::instance()->post();       
+                //获取当前时间戳
+                $currentTime = time(); 
+                //将时间戳转化为'y-m-d'型   
+                $formattedDate = date('Y-m-d', $currentTime);
+                $putTime = $postData['UploadDate'];
+                //用户选择的时间
+                if ($putTime <= $formattedDate) {        
+                    // 更新
+                    $updateData = [
+                        'UploadDate' => Request::instance()->post('UploadDate'),
+                        'path' => $path,
+                    ];               
+                    // 保存
+                    if ($photo->save($updateData)) {
+                        return $this->success('更新成功', url('Photo/index'));
+                    } else {
+                        return $this->error('更新失败: ' . $photo->getError(), url('Photo/index'));
+                    }
                 } else {
-                    return $this->error('更新失败: ' . $photo->getError(), url('Photo/index'));
+                    return $this->error('请选择今天或之前的时间', url('Photo/edit'));
                 }
             }
         } else {
