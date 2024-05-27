@@ -167,7 +167,7 @@ class NewsController extends Controller
                 //将\替换为/ 一个\代表转义字符，使用两个\\告诉php将其视为普通反斜杠
                 $savePath = str_replace('\\', '/', $getPath);
                 $path = '/thinkphp5guide/public/uploads/photo/' . $savePath;
-                 //保存文字。接收传入数据
+                //保存文字。接收传入数据
                 $postData = Request::instance()->post();       
                 //实例化空对象
                 $News = new News();
@@ -179,7 +179,7 @@ class NewsController extends Controller
                 $formattedDate = date('Y-m-d', $currentTime);
                 $putTime = $postData['time'];
                 //用户选择的时间
-                if ($putTime < $formattedDate) {
+                if ($putTime <= $formattedDate) {
                     //插入信息
                     $News->Description = $postData['Description'];
                     $News->author = $postData['author'];
@@ -262,7 +262,7 @@ class NewsController extends Controller
         // 获取当前对象
         $news = News::get($id);
         if (is_null($news)) {
-            return $this->error('所更新的记录不存在', url('Photo/index'));
+            return $this->error('所更新的记录不存在', url('News/upload'));
         }
         // 文件上传
         if ($file) {
@@ -274,20 +274,33 @@ class NewsController extends Controller
                 $getPath = $info->getSaveName();
                 //将\替换为/ 一个\代表转义字符，使用两个\\告诉php将其视为普通反斜杠
                 $savePath = str_replace('\\', '/', $getPath);
-                $path = '/thinkphp5guide/public/uploads/photo/' . $savePath;        
-                // 更新
-                $news->photo_path = $path;
-                $news->Description = Request::instance()->post('Description');
-                $news->author = Request::instance()->post('author');
-                $news->content = Request::instance()->post('content');
-                $news->time = Request::instance()->post('time');
+                $path = '/thinkphp5guide/public/uploads/photo/' . $savePath;  
+                //保存文字。接收传入数据
+                $postData = Request::instance()->post();       
+                //实例化空对象
+                $News = new News();
+                // 将换行符转换为<br>标签
+                $postData['content'] = nl2br($postData['content']);
                 //获取当前时间戳
-                $currentTime = time();
-                $news->submitTime = $currentTime;
-                //更新数据
-                if ($news->save()) {
-                    return $this->success('编辑成功', url('upload'));
-                } 
+                $currentTime = time(); 
+                //将时间戳转化为'y-m-d'型   
+                $formattedDate = date('Y-m-d', $currentTime);
+                $putTime = $postData['time'];
+                if ($putTime <= $formattedDate) {
+                    // 更新
+                    $news->photo_path = $path;
+                    $news->Description = Request::instance()->post('Description');
+                    $news->author = Request::instance()->post('author');
+                    $news->content = Request::instance()->post('content');
+                    $news->time = Request::instance()->post('time');
+                    $news->submitTime = $currentTime;
+                    //更新数据
+                    if ($news->save()) {
+                        return $this->success('编辑成功', url('upload'));
+                    }
+                } else {
+                    return $this->error('请选择今天或之前的时间', url('News/edit'));
+                }          
             } else {
                 throw new \Exception("所更新的记录不存在", 1);
             }

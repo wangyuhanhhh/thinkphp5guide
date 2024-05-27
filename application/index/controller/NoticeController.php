@@ -146,24 +146,40 @@ class NoticeController extends Controller
                 //将\替换为/ 一个\代表转义字符，使用两个\\告诉php将其视为普通反斜杠
                 $savePath = str_replace('\\', '/', $getPath);
                 $path = '/thinkphp5guide/public/uploads/photo/' . $savePath;
+                //保存文字。接收传入数据
+                $postData = Request::instance()->post();       
+                //实例化空对象
+                $Notice = new Notice();
+                // 将换行符转换为<br>标签
+                $postData['content'] = nl2br($postData['content']);
+                //获取当前时间戳
+                $currentTime = time(); 
+                //将时间戳转化为'y-m-d'型   
+                $formattedDate = date('Y-m-d', $currentTime);
+                $putTime = $postData['time'];
+                //用户选择的时间
+                if ($putTime <= $formattedDate) {
+                    //插入信息
+                    $Notice->title = $postData['title'];
+                    $Notice->author = $postData['author'];
+                    $Notice->content = $postData['content'];
+                    $Notice->photo_path = $path;
+                    $Notice->time = $postData['time'];
+                    $Notice->submitTime = $currentTime;
+                    if ($Notice->save()) {
+                        return $this->success('新增成功', url('Notice/upload'));
+                    } else {
+                        return $this->error('保存失败', url('Notice/upload'));
+                    }
+                } else {
+                        return $this->error('请选择今天或之前的时间', url('Notice/add'));
+                }
+            } else {
+                return $this->error('上传失败请重试', url('Notice/add'));
             }
-        }   
-
-        //保存文字。接收传入数据
-        $postData = Request::instance()->post();       
-        //实例化空对象
-        $Notice = new Notice();
-        // 将换行符转换为<br>标签
-        $postData['content'] = nl2br($postData['content']);
-        //插入信息
-        $Notice->title = $postData['title'];
-        $Notice->author = $postData['author'];
-        $Notice->content = $postData['content'];
-        $Notice->photo_path = $path;
-        $Notice->time = $postData['time'];
-        //保存                
-        $Notice->save();
-        return $this->success('新增成功', url('Notice/upload'));
+        } else {
+            return $this->error('未上传文件', url('Notice/upload'));
+        }
     }
     
     public function setTop() {
@@ -185,20 +201,53 @@ class NoticeController extends Controller
     public function update() {
         //接收数据
         $id = Request()->instance()->post('id/d');
-        
-        //获取当前对象
-        $Notice = Notice::get($id);
-        if (!is_null($Notice)) {
-            $Notice->title = Request::instance()->post('title');
-            $Notice->time = Request::instance()->post('time');
-            //更新数据
-            if (false === $Notice->save()) {
-                return '更新失败' . $Notice->getError();
-            } 
-        } else {
-            throw new \Exception("所更新的记录不存在", 1);
+        $file = request()->file('file');
+        // 获取当前对象
+        $notice = Notice::get($id);
+        if (is_null($notice)) {
+            return $this->error('所更新的记录不存在', url('Photo/upload'));
         }
-        return $this->success('编辑成功', url('upload'));
+        // 文件上传
+        if ($file) {
+            $validate = [
+                'ext' => 'jpg,jpeg,png,gif'
+            ];
+            $info = $file->validate($validate)->move(ROOT_PATH . 'public' . DS . 'uploads' . DS . 'photo');
+            if ($info) {
+                $getPath = $info->getSaveName();
+                //将\替换为/ 一个\代表转义字符，使用两个\\告诉php将其视为普通反斜杠
+                $savePath = str_replace('\\', '/', $getPath);
+                $path = '/thinkphp5guide/public/uploads/photo/' . $savePath;  
+                //保存文字。接收传入数据
+                $postData = Request::instance()->post();       
+                //实例化空对象
+                $Notice = new Notice();
+                // 将换行符转换为<br>标签
+                $postData['content'] = nl2br($postData['content']);
+                //获取当前时间戳
+                $currentTime = time(); 
+                //将时间戳转化为'y-m-d'型   
+                $formattedDate = date('Y-m-d', $currentTime);
+                $putTime = $postData['time'];
+                if ($putTime <= $formattedDate) {
+                    // 更新
+                    $notice->photo_path = $path;
+                    $notice->title = Request::instance()->post('title');
+                    $notice->author = Request::instance()->post('author');
+                    $notice->content = Request::instance()->post('content');
+                    $notice->time = Request::instance()->post('time');
+                    $notice->submitTime = $currentTime;
+                    //更新数据
+                    if ($notice->save()) {
+                        return $this->success('编辑成功', url('upload'));
+                    }
+                } else {
+                    return $this->error('请选择今天或之前的时间', url('Notice/edit'));
+                }          
+            } else {
+                throw new \Exception("所更新的记录不存在", 1);
+            }
+        }
     }
 
     public function upload() {
