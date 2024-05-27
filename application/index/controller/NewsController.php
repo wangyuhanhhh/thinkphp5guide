@@ -256,45 +256,81 @@ class NewsController extends Controller
      * 处理表单传过来的数据
      */
     public function update() {
+        // 接收数据
         $id = Request::instance()->post('id/d');
-        //获取当前对象
-        $News = News::get($id);
-        if (!is_null($News)) {
-            $News->Description = Request::instance()->post('Description');
-            $News->time = Request::instance()->post('time');
-            //获取当前时间戳
-            $currentTime = time();
-            $News->submitTime = $currentTime;
-            //更新数据
-            if (false === $News->save()) {
-                return '更新失败' . $News->getError();
-            } 
-        } else {
-            throw new \Exception("所更新的记录不存在", 1);
+        $file = request()->file('file');
+        // 获取当前对象
+        $news = News::get($id);
+        if (is_null($news)) {
+            return $this->error('所更新的记录不存在', url('Photo/index'));
         }
-        return $this->success('编辑成功', url('upload'));
+        // 文件上传
+        if ($file) {
+            $validate = [
+                'ext' => 'jpg,jpeg,png,gif'
+            ];
+            $info = $file->validate($validate)->move(ROOT_PATH . 'public' . DS . 'uploads' . DS . 'photo');
+            if ($info) {
+                $getPath = $info->getSaveName();
+                //将\替换为/ 一个\代表转义字符，使用两个\\告诉php将其视为普通反斜杠
+                $savePath = str_replace('\\', '/', $getPath);
+                $path = '/thinkphp5guide/public/uploads/photo/' . $savePath;        
+                // 更新
+                $news->photo_path = $path;
+                $news->Description = Request::instance()->post('Description');
+                $news->author = Request::instance()->post('author');
+                $news->content = Request::instance()->post('content');
+                $news->time = Request::instance()->post('time');
+                //获取当前时间戳
+                $currentTime = time();
+                $news->submitTime = $currentTime;
+                //更新数据
+                if ($news->save()) {
+                    return $this->success('编辑成功', url('upload'));
+                } 
+            } else {
+                throw new \Exception("所更新的记录不存在", 1);
+            }
+        }
     }
 
     /**
      * 管理端上传文件列表
      */
     public function upload() {
-
         //判断用户登陆状态
         if(User::checkLoginStatus()) {
             //已登陆
             $News = new News();
-            //选出Sort值为1的数据
-            $sort = $News::where('Sort', '1')->order('time', 'desc')->select();
-            $other = $News::where('Sort', '0')->order('time', 'desc')->select(); 
-            //合并两个数组，保证Sort值为1的始终在前面
-            $news = array_merge($sort, $other);   
-            $this->assign('news', $news);
+            $pageSize = 5;
+            $News = new News();
+            // 获取Sort值为1的数据，并按time倒序排序
+            $sort = $News::where('Sort', 1)->order('time', 'desc')->select();
+            // 获取Sort值为0的数据，并按time倒序排序
+            $other = $News::where('Sort', 0)->order('time', 'desc')->select();
+            // 合并两个数组，保证Sort值为1的始终在前面
+            $mergedNews = array_merge($sort, $other);
+            // 计算总页数
+            $totalRows = count($mergedNews);
+            //ceil 向上取整
+            $totalPages = ceil($totalRows / $pageSize);
+            //从get请求中获取当前页码。如果没有page参数，默认使用1
+            $currentPage = input('get.page/d', 1);
+            //计算页码偏移量
+            $offset = ($currentPage - 1) * $pageSize;
+            //array_slice 截取当前页的数据
+            $pagedNews = array_slice($mergedNews, $offset, $pageSize);
+            // 将分页信息传递到视图
+            $this->assign('news', $pagedNews);
+            $this->assign('totalPages', $totalPages);
+            $this->assign('currentPage', $currentPage);
+            // 模拟上一页、下一页的url      
+            $this->assign('prevPageUrl', ($currentPage > 1) ? "?page=".($currentPage-1) : '');
+            $this->assign('nextPageUrl', ($currentPage < $totalPages) ? "?page=".($currentPage+1) : '');
             return $this->fetch();
         } else {
              //未登陆
              $this->redirect('Login/loginForm');
         }
-        
     }
 }

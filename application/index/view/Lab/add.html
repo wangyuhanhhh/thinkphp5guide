@@ -14,39 +14,39 @@
 	<div class="row">
         <div class="col-md-12">
             <!-- 整合为一个表单 -->
-            <form action="{:url('Notice/insert')}" method="post" enctype="multipart/form-data">
+            <form action="{:url('Lab/insert')}" method="post" enctype="multipart/form-data">
                 <!-- 文本输入框 -->
                 <div class="form-group">
                     <span  class="must">*</span>
-                    <label for="title">通知标题：</label>
-                    <textarea type="text" id="title" name="title" rows="3" placeholder="请输入通知标题" required></textarea>
+                    <label for="title">请输入标题：</label>
+                    <textarea type="text" id="title" name="title" placeholder="请输入标题" rows="3" required></textarea>
                 </div>
 
                 <!-- 文本输入框 -->
                 <div class="form-group">
                     <span  class="must">*</span>
-                    <label for="author">通知作者：</label>
-                    <textarea type="text" id="author" name="author" rows="3" placeholder="请输入通知作者" required></textarea>
+                    <label for="author">作者：</label>
+                    <textarea type="text" id="author" name="author" rows="3"  placeholder="请输入作者" required></textarea>
                 </div>
 
                 <!-- 文本输入框 -->
                 <div class="form-group">
                     <span  class="must">*</span>
-                    <label for="content">通知内容：</label>
-                    <textarea type="text" id="content" name="content" rows="3" placeholder="请输入通知内容" required></textarea>
+                    <label for="content">介绍：</label>
+                    <textarea type="text" id="content" name="content" rows="3" placeholder="请输入介绍" required></textarea>
                 </div>
 
                 <!--上传图片-->
                 <div class="form-group">
                     <span  class="must">*</span>
-                    <label for="file">通知图片：</label>
+                    <label for="file">实验室图片：</label>
                     <input type="file" id="photo_path" name="file" required>
                 </div>
     
                 <!-- 日期选择器 -->
                 <div class="form-group">
                     <span  class="must">*</span>
-                    <label for="time">请选择通知发布日期：</label>
+                    <label for="time">请选择发布日期：</label>
                     <input type="date" id="time" name="time" required>
                 </div>
     
