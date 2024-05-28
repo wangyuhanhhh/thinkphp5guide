@@ -190,19 +190,29 @@ class LabController extends Controller {
                 //将\替换为/ 一个\代表转义字符，使用两个\\告诉php将其视为普通反斜杠
                 $savePath = str_replace('\\', '/', $getPath);
                 $path = '/thinkphp5guide/public/uploads/photo/' . $savePath;        
-                // 更新
-                $lab->photo_path = $path;
-                $lab->title = Request::instance()->post('title');
-                $lab->author = Request::instance()->post('author');
-                $lab->content = Request::instance()->post('content');
-                $lab->time = Request::instance()->post('time');
                 //获取当前时间戳
                 $currentTime = time();
-                $lab->submitTime = $currentTime;
-                //更新数据
-                if ($lab->save()) {
-                    return $this->success('编辑成功', url('upload'));
-                } 
+                //将时间戳转化为'y-m-d'型   
+                $formattedDate = date('Y-m-d', $currentTime);
+                $postData = Request::instance()->post(); 
+                $putTime = $postData['time'];
+                // 将换行符转换为<br>标签
+                $postData['content'] = nl2br($postData['content']);
+                if ($putTime <= $formattedDate) {
+                    // 更新
+                    $lab->photo_path = $path;
+                    $lab->title = Request::instance()->post('title');
+                    $lab->author = Request::instance()->post('author');
+                    $lab->content = Request::instance()->post('content');
+                    $lab->time = Request::instance()->post('time');
+                    $lab->submitTime = $currentTime;
+                    //更新数据
+                    if ($lab->save()) {
+                        return $this->success('编辑成功', url('upload'));
+                    } 
+                } else {
+                    return $this->error('请选择今天或之前的时间', url('edit'));
+                }                 
             } else {
                 throw new \Exception("所更新的记录不存在", 1);
             }
