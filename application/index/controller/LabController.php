@@ -214,7 +214,7 @@ class LabController extends Controller {
                         return $this->success('新增成功', url('Lab/upload'));
                     }
                 } else {
-                    return $this->error('请选择今天或之前的时间', url('edit'));
+                    return $this->error('请选择今天或之前的时间', url('Lab/edit', ['id' => $id]) );
                 }                 
             } else {
                 throw new \Exception("所更新的记录不存在", 1);

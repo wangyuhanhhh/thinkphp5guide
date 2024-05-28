@@ -302,7 +302,7 @@ class NewsController extends Controller
                         return $this->success('新增成功', url('News/upload'));
                     }
                 } else {
-                    return $this->error('请选择今天或之前的时间', url('News/edit'));
+                    return $this->error('请选择今天或之前的时间', url('News/edit', ['id' => $id]) );
                 }          
             } else {
                 throw new \Exception("所更新的记录不存在", 1);
