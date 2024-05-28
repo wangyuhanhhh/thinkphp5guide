@@ -188,10 +188,11 @@ class NewsController extends Controller
                     $News->photo_path = $path;
                     $News->time = $postData['time'];
                     $News->submitTime = $currentTime;
-                    if ($News->save()) {
-                        return $this->success('新增成功', url('News/upload'));
+                    $result = $News->validate(true)->save();
+                    if($result === false) {
+                        return $this->error('数据添加错误：' . $News->getError());
                     } else {
-                        return $this->error('保存失败', url('News/upload'));
+                        return $this->success('新增成功', url('News/upload'));
                     }
                 } else {
                         return $this->error('请选择今天或之前的时间', url('News/add'));
@@ -294,9 +295,11 @@ class NewsController extends Controller
                     $news->content = Request::instance()->post('content');
                     $news->time = Request::instance()->post('time');
                     $news->submitTime = $currentTime;
-                    //更新数据
-                    if ($news->save()) {
-                        return $this->success('编辑成功', url('upload'));
+                    $result = $news->validate(true)->save();
+                    if($result === false) {
+                        return $this->error('数据添加错误：' . $news->getError());
+                    } else {
+                        return $this->success('新增成功', url('News/upload'));
                     }
                 } else {
                     return $this->error('请选择今天或之前的时间', url('News/edit'));

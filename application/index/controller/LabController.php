@@ -146,7 +146,7 @@ class LabController extends Controller {
                 $formattedDate = date('Y-m-d', $currentTime);
                 $putTime = $postData['time'];
                 //用户选择的时间
-                if ($putTime < $formattedDate) {
+                if ($putTime <= $formattedDate) {
                     //插入信息
                     $Lab->title = $postData['title'];
                     $Lab->author = $postData['author'];
@@ -154,10 +154,11 @@ class LabController extends Controller {
                     $path = '/thinkphp5guide/public/uploads/photo/' . $savePath;
                     $Lab->photo_path = $path;
                     $Lab->time = $postData['time'];
-                    if ($Lab->save()) {
-                        return $this->success('新增成功', url('Lab/upload'));
+                    $result = $Lab->validate(true)->save();
+                    if($result === false) {
+                        return $this->error('数据添加错误：' . $Lab->getError());
                     } else {
-                        return $this->error('保存失败', url('Lab/upload'));
+                        return $this->success('新增成功', url('Lab/upload'));
                     }
                 } else {
                         return $this->error('请选择今天或之前的时间', url('Lab/add'));
@@ -206,10 +207,12 @@ class LabController extends Controller {
                     $lab->content = Request::instance()->post('content');
                     $lab->time = Request::instance()->post('time');
                     $lab->submitTime = $currentTime;
-                    //更新数据
-                    if ($lab->save()) {
-                        return $this->success('编辑成功', url('upload'));
-                    } 
+                    $result = $lab->validate(true)->save();
+                    if($result === false) {
+                        return $this->error('数据添加错误：' . $lab->getError());
+                    } else {
+                        return $this->success('新增成功', url('Lab/upload'));
+                    }
                 } else {
                     return $this->error('请选择今天或之前的时间', url('edit'));
                 }                 

@@ -166,10 +166,11 @@ class NoticeController extends Controller
                     $Notice->photo_path = $path;
                     $Notice->time = $postData['time'];
                     $Notice->submitTime = $currentTime;
-                    if ($Notice->save()) {
-                        return $this->success('新增成功', url('Notice/upload'));
+                    $result = $Notice->validate(true)->save();
+                    if($result === false) {
+                        return $this->error('数据添加错误：' . $Notice->getError());
                     } else {
-                        return $this->error('保存失败', url('Notice/upload'));
+                        return $this->success('新增成功', url('Notice/upload'));
                     }
                 } else {
                         return $this->error('请选择今天或之前的时间', url('Notice/add'));
@@ -221,9 +222,11 @@ class NoticeController extends Controller
                     $notice->content = Request::instance()->post('content');
                     $notice->time = Request::instance()->post('time');
                     $notice->submitTime = $currentTime;
-                    //更新数据
-                    if ($notice->save()) {
-                        return $this->success('编辑成功', url('upload'));
+                    $result = $notice->validate(true)->save();
+                    if($result === false) {
+                        return $this->error('数据添加错误：' . $notice->getError());
+                    } else {
+                        return $this->success('新增成功', url('Notice/upload'));
                     }
                 } else {
                     return $this->error('请选择今天或之前的时间', url('Notice/edit'));
