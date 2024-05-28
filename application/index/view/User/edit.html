@@ -9,6 +9,7 @@
         <div class="col-md-12">
             <form action="{:url('User/update')}" method="post">
                 <label>姓名:</label>
+                <input type="hidden" name="id" value="{$User->getData('userId')}" />
                 <input type="text" name="name" value="{$User->getData('name')}" />
                 <label>用户名:</label>
                 <input type="text" name="username" value="{$User->getData('username')}" />

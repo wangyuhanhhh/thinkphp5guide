@@ -46,9 +46,9 @@ class UserController extends Controller {
         //判断用户登录状态
         if(User::checkLoginStatus()) {
             //已登录，获取id
-            $id = Request::instance()->post('id/d');
+            $userId = Request::instance()->post('id/d');
             //查找是否存在id为多少的用户
-            if (is_null( $User = User::get($id))) {
+            if (is_null( $User = User::get($userId))) {
                 return '未找到ID为' . $id . '的记录';
             }
             //将数据传给V层
@@ -91,29 +91,32 @@ class UserController extends Controller {
         $User->username = $postData['username'];
         $User->email = $postData['email'];
         $User->create_date = $postData['create_date'];
-        $result = $User->save();
-        if ($result) {
-            return $this->success('新增成功', url('User/index'));
+        $result = $User->validate(true)->save();
+        if($result === false) {
+            return $this->error('数据添加错误：' . $User->getError());
         } else {
-            return $this->error('新增失败');
+            return $this->success('新增成功', url('User/upload'));
         }
     }
 
     //处理数据
     public function update() {
         //接收数据
-        $id = Request::instance()->post('id/d');
-        $User = User::get($id);
+        $userId = Request::instance()->post('id/d');
+     
+        $User = User::get($userId);
         if (!is_null($User)) {
             //写入要更新的数据
             $User->name = Request::instance()->post('name');
             $User->username = Request::instance()->post('username');
             $User->email = Request::instance()->post('email');
             //保存要更新的数据
-            if (false === $User->validate(true)->save()) {
-                return $this->error('更新失败');
+            $result = $User->validate(true)->save();
+            if($result === false) {
+                return $this->error('数据添加错误：' . $User->getError());
+            } else {
+                return $this->success('新增成功', url('User/index'));
             }
         }
-        return $this->success('更新成功', url('User/index'));
     }
 }
