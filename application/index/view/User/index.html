@@ -13,20 +13,18 @@
                 <th>姓名</th>
                 <th>用户名</th>
                 <th>邮箱</th>
-                <th>创建时间</th>
                 <th>操作</th>
             </tr>
             {volist name="users" id="user" key="key"}
             <tr>
-                <td>{$user.userId}</td>
+                <td>{$key}</td>
                 <td>{$user.name}</td>
                 <td>{$user.username}</td>
                 <td>{$user.email}</td>
-                <td>{$user.create_date}</td>
                 <td>
-                    <a href="{:url('edit', ['id' => $user.userId])}">编辑</a>
+                    <a href="{:url('edit', ['id' => $user.id])}">编辑</a>
                     &nbsp;&nbsp;
-                    <a href="{:url('delete', ['id' => $user.userId])}">删除</a>
+                    <a href="{:url('delete', ['id' => $user.id])}">删除</a>
                 </td>
             </tr>
             {/volist}

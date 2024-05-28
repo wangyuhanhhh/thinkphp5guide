@@ -15,9 +15,7 @@ class UserController extends Controller {
         } else {
             //未登录
             $this->redirect('Login/loginForm');
-        }
-        
-        
+        }    
     }
     
     //删除
@@ -25,7 +23,7 @@ class UserController extends Controller {
         //获取id
         $id = Request::instance()->param('id/d');
         if (is_null($id) || 0 === $id) {
-            return $this->error('为获取到ID信息');
+            return $this->error('未获取到ID信息');
         }
         //获取要删除的对象
         $user = User::get($id);
@@ -46,9 +44,9 @@ class UserController extends Controller {
         //判断用户登录状态
         if(User::checkLoginStatus()) {
             //已登录，获取id
-            $userId = Request::instance()->post('id/d');
+            $id = Request::instance()->param('id/d');
             //查找是否存在id为多少的用户
-            if (is_null( $User = User::get($userId))) {
+            if (is_null( $User = User::get($id))) {
                 return '未找到ID为' . $id . '的记录';
             }
             //将数据传给V层
@@ -58,9 +56,9 @@ class UserController extends Controller {
         } else {
             //未登录
             $this->redirect('Login/loginForm');
-        }
-        
+        }      
     }
+
     /**
      * 用户中心
      */
@@ -80,6 +78,7 @@ class UserController extends Controller {
             $this->redirect('Login/loginForm');
         }
     }
+
     /**
      * 处理添加的数据
      */
@@ -90,21 +89,19 @@ class UserController extends Controller {
         $User->name = $postData['name'];
         $User->username = $postData['username'];
         $User->email = $postData['email'];
-        $User->create_date = $postData['create_date'];
         $result = $User->validate(true)->save();
         if($result === false) {
             return $this->error('数据添加错误：' . $User->getError());
         } else {
-            return $this->success('新增成功', url('User/upload'));
+            return $this->success('新增成功', url('User/index'));
         }
     }
 
     //处理数据
     public function update() {
         //接收数据
-        $userId = Request::instance()->post('id/d');
-     
-        $User = User::get($userId);
+        $id = Request::instance()->param('id/d');     
+        $User = User::get($id);
         if (!is_null($User)) {
             //写入要更新的数据
             $User->name = Request::instance()->post('name');
@@ -115,7 +112,7 @@ class UserController extends Controller {
             if($result === false) {
                 return $this->error('数据添加错误：' . $User->getError());
             } else {
-                return $this->success('新增成功', url('User/index'));
+                return $this->success('编辑成功', url('User/index'));
             }
         }
     }

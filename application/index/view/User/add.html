@@ -3,21 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <title>新增用户</title>
+    <style>
+        .must {
+            color: red;
+        }
+    </style>
 </head>
 <body class="container">
     <div class="row">
         <div class="col-md-12">
             <form action="{:url('User/insert')}" method="post">
-                <label>姓名:</label>
+                <span  class="must">*</span>
+                <label>姓名:</label>               
                 <input type="text" name="name" />
+
+                <span  class="must">*</span>
                 <label>用户名:</label>
                 <input type="text" name="username" />
-                <label>邮箱:</label>
+                
+                <span  class="must">*</span>
+                <label>邮箱:</label>                
                 <input type="email" name="email" />
-                <div class="form-group">
-                    <label for="create_date">请选择创建时间：</label>
-                    <input type="date" id="create_date" name="create_date" required>
-                </div>
                 <button type="submit">保存</button>
             </form>
         </div>
