@@ -16,6 +16,7 @@
                 <div class="form-group">
                     <span  class="must">*</span>
                     <label for="title">请输入通知标题：</label>
+                    <input type="hidden" name="id" value="{$Notice->getData('id')}" />
                     <textarea type="text" id="title" name="title" rows="3" required>{$Notice->getData('title')}</textarea>
                 </div>
                 <div class="form-group">
