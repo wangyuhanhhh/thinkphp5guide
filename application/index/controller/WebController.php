@@ -9,7 +9,7 @@ use app\common\model\Notice;
 use app\common\model\Experiment;
 use app\common\model\Download;
 use app\common\model\Photo;
-
+use app\common\model\Lab;
 
 /**
  * 网页首页，继承think\Controller后，就可以利用V层对数据进行打包了
@@ -25,6 +25,7 @@ class WebController extends Controller
         $downloadList = Download::limit(5)->select();
         $BigPhotoList = Db::name('photo')->where('type', 1)->select();
         $SmallPhotoList = Db::name('photo')->where('type', 0)->select();
+        $lab = Lab::limit(1)->select();
      
         // 从数据库中获取新闻数据
         $topNewsList = News::where('Sort', 1)->order('time', 'desc')->select();
@@ -53,6 +54,7 @@ class WebController extends Controller
         $this->assign('downloadList', $downloadList);
         $this->assign('BigPhotoList', $BigPhotoList);
         $this->assign('SmallPhotoList', $SmallPhotoList);
+        $this->assign('lab', $lab);
         //创建Web对象
         $Web = new Web; 
         $webs = $Web->select();
