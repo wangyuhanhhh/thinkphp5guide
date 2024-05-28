@@ -18,7 +18,7 @@
                 <div class="form-group">
                     <span  class="must">*</span>
                     <label for="name">请输入实验名称：</label>
-                    <textarea type="text" id="name" name="name" placeholder="请输入实验名称" rows="3" required></textarea>
+                    <textarea type="text" id="name" name="name" placeholder="请输入实验名称" rows="3" required><?php echo isset(session('formData')['name']) ? session('formData')['name'] : ''; ?></textarea>
                 </div>
                 <!-- 文件上传框 -->
                 <div class="form-group">

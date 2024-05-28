@@ -113,6 +113,8 @@ class DownloadController extends Controller
                         return $this->success('新增成功', url('Download/upload'));
                     } 
                 } else {
+                    //如果触发报错跳转，保存此时表单中的内容
+                    $this->saveFormData($postData);
                     return $this->error('请选择今天及今天之前的时间', url('Download/add'));
                 }
             } else {
@@ -132,6 +134,14 @@ class DownloadController extends Controller
     public function getInfo($name = '')
     {
         return isset($this->info[$name]) ? $this->info[$name] : $this->info;
+    }
+
+     /**
+     * 保存数据到Flash中，在新增报错回跳后，保留报错前表单信息
+     */
+    private function saveFormData($postData) {
+        //使用flash函数保存数据
+        session('formData', $postData);
     }
 
     /**
