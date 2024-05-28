@@ -112,6 +112,8 @@ class ExperimentController extends Controller
                         return $this->success('新增成功', url('Experiment/upload'));
                     } 
                 } else {
+                    //如果触发报错跳转，保存此时表单中的内容
+                    $this->saveFormData($postData);
                     return $this->error('请选择今天及今天之前的时间', url('Experiment/add'));
                 }
             } else {
@@ -120,6 +122,14 @@ class ExperimentController extends Controller
         } else {
             return $this->error('没有文件被上传', url('Experiment/upload'));
         }
+    }
+
+    /**
+     * 保存数据到Flash中，在新增报错回跳后，保留报错前表单信息
+     */
+    private function saveFormData($postData) {
+        //使用flash函数保存数据
+        session('formData', $postData);
     }
 
     /**

@@ -178,6 +178,7 @@ class NewsController extends Controller
                 //将时间戳转化为'y-m-d'型   
                 $formattedDate = date('Y-m-d', $currentTime);
                 $putTime = $postData['time'];
+                
                 //用户选择的时间
                 if ($putTime <= $formattedDate) {
                     //插入信息
@@ -195,6 +196,8 @@ class NewsController extends Controller
                         return $this->success('新增成功', url('News/upload'));
                     }
                 } else {
+                        //如果触发报错跳转，保存此时表单中的内容
+                        $this->saveFormData($postData);
                         return $this->error('请选择今天或之前的时间', url('News/add'));
                 }
             } else {
@@ -202,7 +205,7 @@ class NewsController extends Controller
             }
         } else {
             return $this->error('未上传文件', url('News/upload'));
-        }     
+        }  
     }  
     
     /**
@@ -227,6 +230,14 @@ class NewsController extends Controller
             // 如果Sort已经是0，提示已置顶
             $this->error('当前新闻未置顶', url('News/upload'));
         }
+    }
+
+    /**
+     * 保存数据到Flash中，在新增报错回跳后，保留报错前表单信息
+     */
+    private function saveFormData($postData) {
+        //使用flash函数保存数据
+        session('formData', $postData);
     }
 
     /**
@@ -302,6 +313,8 @@ class NewsController extends Controller
                         return $this->success('新增成功', url('News/upload'));
                     }
                 } else {
+                    //如果触发报错跳转，保存此时表单中的内容
+                    $this->saveFormData($postData);
                     return $this->error('请选择今天或之前的时间', url('News/edit'));
                 }          
             } else {

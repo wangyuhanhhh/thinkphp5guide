@@ -173,6 +173,8 @@ class NoticeController extends Controller
                         return $this->success('新增成功', url('Notice/upload'));
                     }
                 } else {
+                        //如果触发报错跳转，保存此时表单中的内容
+                        $this->saveFormData($postData);
                         return $this->error('请选择今天或之前的时间', url('Notice/add'));
                 }
             } else {
@@ -181,6 +183,14 @@ class NoticeController extends Controller
         } else {
             return $this->error('未上传文件', url('Notice/upload'));
         }
+    }
+
+    /**
+     * 保存数据到Flash中，在新增报错回跳后，保留报错前表单信息
+     */
+    private function saveFormData($postData) {
+        //使用flash函数保存数据
+        session('formData', $postData);
     }
 
     public function update() {
@@ -229,7 +239,9 @@ class NoticeController extends Controller
                         return $this->success('新增成功', url('Notice/upload'));
                     }
                 } else {
-                    return $this->error('请选择今天或之前的时间', url('Notice/edit'));
+                        //如果触发报错跳转，保存此时表单中的内容
+                        $this->saveFormData($postData);
+                        return $this->error('请选择今天或之前的时间', url('Notice/edit'));
                 }          
             } else {
                 throw new \Exception("所更新的记录不存在", 1);

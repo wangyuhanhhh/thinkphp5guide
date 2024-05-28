@@ -19,28 +19,28 @@
                 <div class="form-group">
                     <span  class="must">*</span>
                     <label for="Description">新闻标题：</label>
-                    <textarea type="text" id="Description" name="Description" placeholder="请输入新闻标题" rows="3" required></textarea>
+                    <textarea type="text" id="Description" name="Description" placeholder="请输入新闻标题" rows="3" required><?php echo isset(session('formData')['Description']) ? session('formData')['Description'] : ''; ?></textarea>
                 </div>
 
                 <!-- 文本输入框 -->
                 <div class="form-group">
                     <span  class="must">*</span>
                     <label for="author">新闻作者：</label>
-                    <textarea type="text" id="author" name="author" rows="3"  placeholder="请输入新闻作者" required></textarea>
+                    <textarea type="text" id="author" name="author" rows="3"  placeholder="请输入新闻作者" required><?php echo isset(session('formData')['author']) ? session('formData')['author'] : ''; ?></textarea>
                 </div>
 
                 <!-- 文本输入框 -->
                 <div class="form-group">
                     <span  class="must">*</span>
                     <label for="content">新闻内容：</label>
-                    <textarea type="text" id="content" name="content" rows="3" placeholder="请输入新闻内容" required></textarea>
+                    <textarea type="text" id="content" name="content" rows="3" placeholder="请输入新闻内容" required><?php echo isset(session('formData')['content']) ? session('formData')['content'] : ''; ?></textarea>
                 </div>
 
                 <!--上传图片-->
                 <div class="form-group">
                     <span  class="must">*</span>
                     <label for="file">新闻图片：</label>
-                    <input type="file" id="photo_path" name="file" required>
+                    <input type="file" id="photo_path" name="file" required>                   
                 </div>
     
                 <!-- 日期选择器 -->
