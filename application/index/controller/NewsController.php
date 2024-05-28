@@ -315,7 +315,7 @@ class NewsController extends Controller
                 } else {
                     //如果触发报错跳转，保存此时表单中的内容
                     $this->saveFormData($postData);
-                    return $this->error('请选择今天或之前的时间', url('News/edit'));
+                    return $this->error('请选择今天或之前的时间', url('News/edit', ['id' => $id]) );
                 }          
             } else {
                 throw new \Exception("所更新的记录不存在", 1);
